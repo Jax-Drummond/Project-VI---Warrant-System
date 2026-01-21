@@ -45,6 +45,7 @@ warrant-system/
 │   ├── urls.py
 │   └── wsgi.py
 ├── /warrants              # Main Application Logic
+│   ├── /management        # Commands (e.g seed)
 │   ├── /migrations        # DB Schema changes
 │   ├── /templates         # HTML files (Frontend)
 │   ├── models.py          # Database Tables
