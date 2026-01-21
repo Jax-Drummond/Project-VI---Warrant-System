@@ -66,7 +66,6 @@ warrant-system/
 ```bash
 git clone https://github.com/Jax-Drummond/Project-VI---Warrant-System
 cd warrant-system
-
 ```
 
 
@@ -74,7 +73,6 @@ cd warrant-system
 This will build the Docker image and start the server.
 ```bash
 docker compose up
-
 ```
 
 
@@ -85,7 +83,6 @@ docker compose up
 Open a **new** terminal window and run:
 ```bash
 docker compose exec web python manage.py migrate
-
 ```
 
 
@@ -93,7 +90,6 @@ docker compose exec web python manage.py migrate
 To access the Django Admin panel:
 ```bash
 docker compose exec web python manage.py createsuperuser
-
 ```
 
 
@@ -115,14 +111,19 @@ Run this whenever you pull code that changes `models.py`:
 
 ```bash
 docker compose exec web python manage.py migrate
-
 ```
 
 If you have made changes to `models.py` and need to generate new migration files:
 
 ```bash
 docker compose exec web python manage.py makemigrations
+```
 
+### 🌱 Database Seeding
+
+Run this if you want to seed the database. (Currently only seeds citizens, and adds superuser(Check template.env))
+```bash
+docker compose exec web python manage.py seed
 ```
 
 ### 📦 Installing New Packages
@@ -131,14 +132,12 @@ If you add a package to `requirements.txt`, you must rebuild the container:
 
 ```bash
 docker compose up --build
-
 ```
 
 ### 🧪 Running Tests
 
 ```bash
 docker compose exec web python manage.py test
-
 ```
 
 ### 💻 Accessing the Shell
@@ -147,7 +146,6 @@ To interact with the database directly via Python:
 
 ```bash
 docker compose exec web python manage.py shell
-
 ```
 
 ---

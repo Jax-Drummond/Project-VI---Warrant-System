@@ -7,7 +7,7 @@ class MyUserManager(BaseUserManager):
     def create_user(self, badge_number, password, citizen_id, **extra_fields):
         if not badge_number:
             raise ValueError("Email must be set.")
-        officer = self.model(badge_number=badge_number, citizen_id=citizen_id, **extra_fields)
+        officer = self.model(badge_number=badge_number, citizen_id_id=citizen_id, **extra_fields)
         officer.set_password(password)
         officer.save()
         return officer
