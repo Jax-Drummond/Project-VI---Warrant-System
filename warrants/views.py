@@ -1,61 +1,29 @@
-from django.shortcuts import render
-from django.http import JsonResponse
+import rest_framework.permissions
+from django.shortcuts import redirect
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from .serializer import *
 
 # Create your views here.
-def Warrant(request):
+class WarrantViewSet(viewsets.ModelViewSet):
+    queryset = Warrant.objects.all()
+    serializer_class = WarrantSerializer
 
-    if request.method == "GET":
-        return JsonResponse({"status" : "ok"})
-    
-    elif request.method == "POST":
-        return JsonResponse({"status" : "ok"})
-    
-    elif request.method == "PATCH":
-        return JsonResponse({"status" : "ok"})
-    
-    else:
-        return JsonResponse({"Error" : "Request method not allowed"}, status=405)
+class CrimeViewSet(viewsets.ModelViewSet):
+    queryset = Crime.objects.all()
+    serializer_class = CrimeSerializer
 
-def Crime(request):
+class CitizenViewSet(viewsets.ModelViewSet):
+    queryset = Citizen.objects.all()
+    serializer_class = CitizenSerializer
 
-    if request.method == "GET":
-        return JsonResponse({"status" : "ok"})
-    
-    elif request.method == "POST":
-        return JsonResponse({"status" : "ok"})
-    
-    elif request.method == "PATCH":
-        return JsonResponse({"status" : "ok"})
-    
-    else:
-        return JsonResponse({"Error" : "Request method not allowed"}, status=405)
-    
+class License_PlateViewSet(viewsets.ModelViewSet):
+    queryset = License_Plate.objects.all()
+    serializer_class = License_PlateSerializer
 
-def Citizen(request):
-    if request.method == "GET":
-        return JsonResponse({"status" : "ok"})
-    
-    elif request.method == "POST":
-        return JsonResponse({"status" : "ok"})
-    
-    elif request.method == "PATCH":
-        return JsonResponse({"status" : "ok"})
-    
-    else:
-        return JsonResponse({"Error" : "Request method not allowed"}, status=405)
-    
-
-def Vehicle(request):
-    if request.method == "GET":
-        return JsonResponse({"status" : "ok"})
-    
-    elif request.method == "POST":
-        return JsonResponse({"status" : "ok"})
-    
-    elif request.method == "PATCH":
-        return JsonResponse({"status" : "ok"})
-    
-    else:
-        return JsonResponse({"Error" : "Request method not allowed"}, status=405)
-
-
+class Officer_ViewSet(viewsets.ModelViewSet):
+    queryset = Officer.objects.all()
+    serializer_class = OfficerSerializer
