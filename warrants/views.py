@@ -20,10 +20,10 @@ class CitizenViewSet(viewsets.ModelViewSet):
     queryset = Citizen.objects.all()
     serializer_class = CitizenSerializer
 
-class License_PlateViewSet(viewsets.ModelViewSet):
+class LicensePlateViewSet(viewsets.ModelViewSet):
     queryset = License_Plate.objects.all()
     serializer_class = License_PlateSerializer
 
-class Officer_ViewSet(viewsets.ModelViewSet):
+class OfficerViewSet(viewsets.ModelViewSet):
     queryset = Officer.objects.all()
     serializer_class = OfficerSerializer
