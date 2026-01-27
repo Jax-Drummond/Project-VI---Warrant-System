@@ -23,8 +23,8 @@ def create_citizens():
 
     first_name = random.choice(first_names)
     last_name = random.choice(last_names)
-    sex = random.choice(Citizen.Sex.choices)
-    race = random.choice(Citizen.Race.choices)
+    sex = random.choice(Citizen.Sex.choices)[0]
+    race = random.choice(Citizen.Race.choices)[0]
     age = random.randint(10,80)
     citizen = Citizen.objects.get_or_create(
         first_name=first_name,
