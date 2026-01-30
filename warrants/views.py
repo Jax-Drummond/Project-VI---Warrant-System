@@ -27,3 +27,7 @@ class LicensePlateViewSet(viewsets.ModelViewSet):
 class OfficerViewSet(viewsets.ModelViewSet):
     queryset = Officer.objects.all()
     serializer_class = OfficerSerializer
+
+
+
+## Frontend Views
