@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ["0.0.0.0", "localhost", "127.0.0.1"]
 
 AUTH_USER_MODEL = 'warrants.Officer'
 
-LOGIN_REDIRECT_URL = ''
+LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'login'
 
 # Application definition

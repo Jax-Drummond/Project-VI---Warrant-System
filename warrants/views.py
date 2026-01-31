@@ -1,9 +1,9 @@
 import rest_framework.permissions
-from django.shortcuts import redirect
+from django.shortcuts import render
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, status
-from rest_framework.decorators import action
+from django.contrib.auth.decorators import login_required
 from rest_framework.response import Response
 from .serializer import *
 
@@ -31,3 +31,6 @@ class OfficerViewSet(viewsets.ModelViewSet):
 
 
 ## Frontend Views
+@login_required
+def dashboard_view(request):
+    return render(request, 'warrants/dashboard.html')
