@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Command Center{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+
+        <div class="card shadow-sm mt-4">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Command Center</h4>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Welcome, Officer {{ user.username }}</h5>
+                <p class="card-text text-muted">Select an action below to proceed.</p>
+
+                <hr>
+
+                <div class="d-grid gap-2 d-md-block">
+                    <a href="{% url 'officer-list' %}" class="btn btn-primary btn-lg">
+                        View Officer Roster
+                    </a>
+
+                    <button class="btn btn-secondary btn-lg" disabled>
+                        Create Warrant (Coming Soon)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
