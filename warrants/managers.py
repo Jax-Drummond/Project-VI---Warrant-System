@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class MyUserManager(BaseUserManager):
-    
+
     def create_user(self, badge_number, password, citizen_id, **extra_fields):
         if not badge_number:
             raise ValueError("Email must be set.")
@@ -11,7 +11,7 @@ class MyUserManager(BaseUserManager):
         officer.set_password(password)
         officer.save()
         return officer
-    
+
     def create_superuser(self, badge_number, password, citizen_id, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
