@@ -45,7 +45,7 @@ class Citizen(models.Model):
 
 class License_Plate(models.Model):
     plate_number = models.CharField(max_length=8, primary_key=True)
-    owner = models.ForeignKey(Citizen, on_delete=models.CASCADE)
+    owner = models.ForeignKey(Citizen, on_delete=models.CASCADE, related_name='plates')
     car_model = models.CharField(max_length=30)
     car_make = models.CharField(max_length=30)
 
@@ -64,6 +64,15 @@ class Officer(AbstractBaseUser, PermissionsMixin):
         return f"{self.badge_number}"
 
 class Warrant(models.Model):
+    class Status(models.TextChoices):
+        OPEN = 'O', 'Open'
+        PENDING = 'P', 'Pending'
+        CLOSED = 'C', 'Closed'
+    status = models.CharField(
+        max_length=1,
+        choices=Status.choices,
+        default=Status.OPEN
+        )
     crime_number = models.ForeignKey(Crime, on_delete=models.CASCADE)
     citizen_involved = models.ForeignKey(Citizen, on_delete=models.CASCADE)
     approving_judge = models.CharField(max_length=30)
