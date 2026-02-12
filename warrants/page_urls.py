@@ -15,4 +15,5 @@ urlpatterns = [
     path('warrants/<int:pk>/', views.warrant_detail_view, name='warrant-detail'),
     path('warrants/<int:pk>/edit/', views.warrant_edit_view, name='warrant-edit'),
     path('officers/', views.officer_list_view, name='officer-list'),
+    path('crimes/', views.crime_list_view, name='crime-list'),
 ]

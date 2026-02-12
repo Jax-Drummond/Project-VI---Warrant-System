@@ -74,3 +74,6 @@ def warrant_edit_view(request, pk):
 
 def officer_list_view(request):
     return render(request, 'warrants/officer_list.html')
+
+def crime_list_view(request):
+    return render(request, 'warrants/crime_list.html')
