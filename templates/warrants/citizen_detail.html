@@ -42,6 +42,9 @@
             <div class="card shadow mb-4">
                 <div class="card-header bg-secondary text-white">
                     <h5 class="mb-0">🚗 Known Vehicles</h5>
+                    <a href="{% url 'plate-create' %}?owner={{ citizen_id }}" class="btn btn-sm btn-light text-dark fw-bold">
+                        ➕ Add Vehicle
+                    </a>
                 </div>
                 <div class="card-body">
                     <div id="vehicle-list" class="d-flex flex-wrap gap-2">

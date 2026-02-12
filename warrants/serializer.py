@@ -10,14 +10,21 @@ class CrimeSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['section_number', 'description']
 
 class License_PlateSerializer(serializers.HyperlinkedModelSerializer):
+    owner_name = serializers.SerializerMethodField()
+
+    # WRITE-ONLY: Accepts ID (5)
+    owner = serializers.PrimaryKeyRelatedField(queryset=Citizen.objects.all())
 
     class Meta:
         model = License_Plate
-        fields = ['plate_number', 'owner', 'car_model', 'car_make']
+        fields = ['plate_number', 'owner', 'owner_name', 'car_make', 'car_model']
+
+    def get_owner_name(self, obj):
+        return f"{obj.owner.first_name} {obj.owner.last_name}"
 
 class OfficerSerializer(serializers.HyperlinkedModelSerializer):
     name = serializers.SerializerMethodField()
-    
+
     class Meta:
         model = Officer
         fields = ['badge_number', 'name', 'is_active', 'is_staff']

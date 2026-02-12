@@ -4,8 +4,6 @@ from django.contrib.auth.models import PermissionsMixin
 from warrants.managers import MyUserManager
 from django.utils.translation import gettext_lazy as _
 
-# Create your models here.
-
 # Auto incrementing primary keys are created by default
 class Crime(models.Model):
     section_number = models.CharField(max_length=15, primary_key=True)

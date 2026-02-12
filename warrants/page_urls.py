@@ -20,4 +20,8 @@ urlpatterns = [
     path('citizens/create/', views.citizen_create_view, name='citizen-create'),
     path('citizens/<int:pk>/', views.citizen_detail_view, name='citizen-detail'),
     path('citizens/<int:pk>/edit/', views.citizen_edit_view, name='citizen-edit'),
+    path('plates/', views.plate_list_view, name='plate-list'),
+    path('plates/create/', views.plate_create_view, name='plate-create'),
+    path('plates/<str:pk>/', views.plate_detail_view, name='plate-detail'),
+    path('plates/<str:pk>/edit/', views.plate_edit_view, name='plate-edit'),
 ]

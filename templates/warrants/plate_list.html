@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}License Plate Database{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12">
+        <div class="card shadow mt-4">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">🚗 Vehicle Database (DMV)</h4>
+                <a href="{% url 'plate-create' %}" class="btn btn-success fw-bold">➕ Register Plate</a>
+            </div>
+            
+            <div class="card-body">
+                <input type="text" id="search-box" class="form-control form-control-lg mb-4" placeholder="Search Plate Number or Owner Name...">
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Plate #</th>
+                                <th>Vehicle</th>
+                                <th>Registered Owner</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="plate-table-body"></tbody>
+                    </table>
+                </div>
+                <div id="loading" class="text-center py-3"><div class="spinner-border text-primary"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    const tableBody = document.getElementById('plate-table-body');
+    const searchBox = document.getElementById('search-box');
+    const loading = document.getElementById('loading');
+
+    async function fetchPlates(query = '') {
+        loading.style.display = 'block';
+        try {
+            const response = await fetch(`/api/license_plate/?search=${encodeURIComponent(query)}`);
+            const data = await response.json();
+            
+            tableBody.innerHTML = '';
+            if(data.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No plates found.</td></tr>';
+            } else {
+                data.forEach(p => {
+                    const row = `
+                        <tr>
+                            <td><span class="badge bg-warning text-dark fs-6 border border-dark">${p.plate_number}</span></td>
+                            <td>${p.car_make} ${p.car_model}</td>
+                            <td class="fw-bold text-primary">${p.owner_name}</td>
+                            <td>
+                                <a href="/plates/${p.plate_number}/" class="btn btn-sm btn-outline-dark">View</a>
+                            </td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+            }
+        } catch (err) {
+            tableBody.innerHTML = `<tr><td colspan="4" class="text-danger">Error: ${err.message}</td></tr>`;
+        } finally {
+            loading.style.display = 'none';
+        }
+    }
+
+    fetchPlates();
+
+    let timeout = null;
+    searchBox.addEventListener('input', (e) => {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => fetchPlates(e.target.value), 300);
+    });
+});
+</script>
+{% endblock %}

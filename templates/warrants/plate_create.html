@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Register Vehicle{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow mt-4">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">📝 Register New Vehicle</h4>
+            </div>
+            <div class="card-body">
+                <form id="create-plate-form">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">License Plate Number</label>
+                        <input type="text" id="plate_number" class="form-control text-uppercase" placeholder="e.g. ABC-123" required maxlength="8">
+                        <div class="form-text">Max 8 characters. Must be unique.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Registered Owner</label>
+                        <select id="owner" class="form-select" required>
+                            <option value="">Loading citizens...</option>
+                        </select>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Make</label>
+                            <input type="text" id="make" class="form-control" placeholder="e.g. Ford" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Model</label>
+                            <input type="text" id="model" class="form-control" placeholder="e.g. Explorer" required>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <button type="submit" class="btn btn-success w-100">Register Plate</button>
+                    <a href="{% url 'plate-list' %}" class="btn btn-link w-100 mt-2">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    const ownerSelect = document.getElementById('owner');
+    
+    // 1. Load Citizens
+    try {
+        const response = await fetch('/api/citizen/');
+        const citizens = await response.json();
+        
+        ownerSelect.innerHTML = '<option value="">-- Select Owner --</option>';
+        citizens.forEach(c => {
+            ownerSelect.innerHTML += `<option value="${c.id}">${c.first_name} ${c.last_name}</option>`;
+        });
+
+        // 2. Check URL for pre-selected owner (?owner=5)
+        const urlParams = new URLSearchParams(window.location.search);
+        const preSelected = urlParams.get('owner');
+        if(preSelected) {
+            ownerSelect.value = preSelected;
+            ownerSelect.style.backgroundColor = "#d1e7dd"; // Light green highlight
+        }
+
+    } catch (err) {
+        alert("Error loading citizen list.");
+    }
+
+    // 3. Submit Form
+    document.getElementById('create-plate-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const payload = {
+            plate_number: document.getElementById('plate_number').value.toUpperCase(),
+            owner: parseInt(ownerSelect.value),
+            car_make: document.getElementById('make').value,
+            car_model: document.getElementById('model').value
+        };
+
+        try {
+            const response = await fetch('/api/license_plate/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if(response.ok) {
+                window.location.href = "{% url 'plate-list' %}";
+            } else {
+                const err = await response.json();
+                alert("Error: " + JSON.stringify(err));
+            }
+        } catch (error) {
+            alert("Network Error");
+        }
+    });
+});
+</script>
+{% endblock %}

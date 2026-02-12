@@ -29,16 +29,30 @@ class WarrantViewSet(viewsets.ModelViewSet):
         return queryset
 
 class CrimeViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Crime.objects.all()
     serializer_class = CrimeSerializer
 
 class CitizenViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Citizen.objects.all()
     serializer_class = CitizenSerializer
 
 class LicensePlateViewSet(viewsets.ModelViewSet):
     queryset = License_Plate.objects.all()
     serializer_class = License_PlateSerializer
+
+    def get_queryset(self):
+        queryset = License_Plate.objects.all()
+        query = self.request.query_params.get('search', None)
+        if query:
+            queryset = queryset.filter(
+                # Search by Plate Number OR Owner Name
+                Q(plate_number__icontains=query) |
+                Q(owner__first_name__icontains=query) |
+                Q(owner__last_name__icontains=query)
+            )
+        return queryset
 
 class OfficerViewSet(viewsets.ModelViewSet):
     queryset = Officer.objects.all()
@@ -94,3 +108,19 @@ def citizen_detail_view(request, pk):
 @login_required
 def citizen_edit_view(request, pk):
     return render(request, 'warrants/citizen_edit.html', {'citizen_id': pk})
+
+@login_required
+def plate_list_view(request):
+    return render(request, 'warrants/plate_list.html')
+
+@login_required
+def plate_create_view(request):
+    return render(request, 'warrants/plate_create.html')
+
+@login_required
+def plate_detail_view(request, pk):
+    return render(request, 'warrants/plate_detail.html', {'plate_id': pk})
+
+@login_required
+def plate_edit_view(request, pk):
+    return render(request, 'warrants/plate_edit.html', {'plate_id': pk})
