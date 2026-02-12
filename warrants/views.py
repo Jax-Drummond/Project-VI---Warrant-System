@@ -75,5 +75,22 @@ def warrant_edit_view(request, pk):
 def officer_list_view(request):
     return render(request, 'warrants/officer_list.html')
 
+@login_required
 def crime_list_view(request):
     return render(request, 'warrants/crime_list.html')
+
+@login_required
+def citizen_list_view(request):
+    return render(request, 'warrants/citizen_list.html')
+
+@login_required
+def citizen_create_view(request):
+    return render(request, 'warrants/citizen_create.html')
+
+@login_required
+def citizen_detail_view(request, pk):
+    return render(request, 'warrants/citizen_detail.html', {'citizen_id': pk})
+
+@login_required
+def citizen_edit_view(request, pk):
+    return render(request, 'warrants/citizen_edit.html', {'citizen_id': pk})

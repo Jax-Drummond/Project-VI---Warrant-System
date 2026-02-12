@@ -65,9 +65,9 @@ class CitizenSerializer(serializers.HyperlinkedModelSerializer):
 
     warrants = WarrantSerializer(source = 'warrant_set', many = True, read_only = True)
     vehicles = License_PlateSerializer(source = 'plates', many = True, read_only = True)
-    race = serializers.CharField(source='get_race_display', read_only=True)
-    sex = serializers.CharField(source='get_sex_display', read_only=True)
+    race_label = serializers.CharField(source='get_race_display', read_only=True)
+    sex_label = serializers.CharField(source='get_sex_display', read_only=True)
 
     class Meta:
         model = Citizen
-        fields = ["id",'first_name', 'last_name', 'warrants', 'vehicles', 'race', 'sex', 'age', 'details']
+        fields = ["id",'first_name', 'last_name', 'warrants', 'vehicles', 'race', 'race_label', 'sex', 'sex_label', 'age', 'details']

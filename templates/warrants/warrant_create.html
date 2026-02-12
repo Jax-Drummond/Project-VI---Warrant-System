@@ -65,6 +65,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // Assuming Citizen model has 'id', 'first_name', 'last_name'
                 citizenSelect.innerHTML += `<option value="${c.id}">${c.first_name} ${c.last_name}</option>`;
             });
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const preSelectedID = urlParams.get('citizen');
+
+            if (preSelectedID) {
+                // Set the dropdown value
+                citizenSelect.value = preSelectedID;
+                
+                // Optional: Flash yellow so the user sees it's pre-filled
+                citizenSelect.style.backgroundColor = "#fff3cd"; 
+            }
         }
 
         if(crimesRes.ok) {
@@ -88,7 +99,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         // --- VALIDATION STEP ---
         const citizenId = citizenSelect.value;
         const crimeId = crimeSelect.value;
-        alert(citizenId)
 
         if (!citizenId) {
             alert("⚠️ Error: You must select a Citizen.");
