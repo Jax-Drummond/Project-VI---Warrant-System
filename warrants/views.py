@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Q
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from django.contrib.auth.decorators import login_required
@@ -43,6 +43,13 @@ class LicensePlateViewSet(viewsets.ModelViewSet):
 class OfficerViewSet(viewsets.ModelViewSet):
     queryset = Officer.objects.all()
     serializer_class = OfficerSerializer
+    
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
 ## Frontend Views
 @login_required
@@ -64,3 +71,6 @@ def warrant_detail_view(request, pk):
 @login_required
 def warrant_edit_view(request, pk):
     return render(request, 'warrants/warrant_edit.html', {'warrant_id': pk})
+
+def officer_list_view(request):
+    return render(request, 'warrants/officer_list.html')

@@ -16,10 +16,15 @@ class License_PlateSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['plate_number', 'owner', 'car_model', 'car_make']
 
 class OfficerSerializer(serializers.HyperlinkedModelSerializer):
-
+    name = serializers.SerializerMethodField()
+    
     class Meta:
         model = Officer
-        fields = ['badge_number', 'citizen_id', 'is_staff', 'is_active']
+        fields = ['badge_number', 'name', 'is_active', 'is_staff']
+
+    def get_name(self, obj):
+        # Access the related Citizen model to get the real name
+        return f"{obj.citizen_id.first_name} {obj.citizen_id.last_name}"
 
 class WarrantSerializer(serializers.HyperlinkedModelSerializer):
     # --- OVERRIDE INPUTS ---
