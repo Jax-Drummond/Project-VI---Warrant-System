@@ -26,7 +26,7 @@ class WarrantViewSet(viewsets.ModelViewSet):
                 Q(crime_number__description__icontains=query)
             ).distinct()
 
-        return queryset
+            return queryset
 
 class CrimeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
