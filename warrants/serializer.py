@@ -22,14 +22,30 @@ class OfficerSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['badge_number', 'citizen_id', 'is_staff', 'is_active']
 
 class WarrantSerializer(serializers.HyperlinkedModelSerializer):
+    # --- OVERRIDE INPUTS ---
+    citizen_involved = serializers.PrimaryKeyRelatedField(queryset=Citizen.objects.all())
+    crime_number = serializers.PrimaryKeyRelatedField(queryset=Crime.objects.all())
+
+    # --- READ ONLY OUTPUTS ---
     citizen_name = serializers.SerializerMethodField()
     linked_plates = serializers.SerializerMethodField()
     crime_description = serializers.CharField(source='crime_number.description', read_only=True)
-    status = serializers.CharField(source='get_status_display', read_only=True)
+    status_label = serializers.CharField(source='get_status_display', read_only=True)
 
     class Meta:
         model = Warrant
-        fields = ['id', 'crime_number', 'crime_description', 'citizen_involved','citizen_name', 'approving_judge', 'linked_plates','status']
+        fields = [
+            'url',
+            'id',
+            'citizen_involved',
+            'citizen_name',
+            'crime_number',
+            'crime_description',
+            'linked_plates',
+            'approving_judge',
+            'status',
+            'status_label'
+        ]
 
     def get_citizen_name(self, obj):
         citizen = obj.citizen_involved
@@ -49,4 +65,4 @@ class CitizenSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Citizen
-        fields = ['first_name', 'last_name', 'warrants', 'vehicles', 'race', 'sex', 'age', 'details']
+        fields = ["id",'first_name', 'last_name', 'warrants', 'vehicles', 'race', 'sex', 'age', 'details']

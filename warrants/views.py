@@ -53,3 +53,14 @@ def dashboard_view(request):
 def warrants_view(request):
     return render(request, 'warrants/warrants.html')
 
+@login_required
+def warrant_create_view(request):
+    return render(request, 'warrants/warrant_create.html')
+
+@login_required
+def warrant_detail_view(request, pk):
+    return render(request, 'warrants/warrant_detail.html', {'warrant_id': pk})
+
+@login_required
+def warrant_edit_view(request, pk):
+    return render(request, 'warrants/warrant_edit.html', {'warrant_id': pk})

@@ -11,4 +11,7 @@ urlpatterns = [
 
     # The Create Warrant Page
     path('warrants/', views.warrants_view, name='warrant-list'),
+    path('warrants/create/', views.warrant_create_view, name='warrant-create'),
+    path('warrants/<int:pk>/', views.warrant_detail_view, name='warrant-detail'),
+    path('warrants/<int:pk>/edit/', views.warrant_edit_view, name='warrant-edit'),
 ]
