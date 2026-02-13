@@ -100,6 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         e.preventDefault();
         
         const payload = {
+            plate_number: plateId,
             owner: parseInt(ownerSelect.value),
             car_make: document.getElementById('make').value,
             car_model: document.getElementById('model').value
@@ -107,7 +108,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         try {
             const response = await fetch(`/api/license_plate/${plateId}/`, {
-                method: 'PATCH',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
