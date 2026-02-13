@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Issue Warrant{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow mt-4">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">📝 Issue New Warrant</h4>
+            </div>
+            <div class="card-body">
+                <form id="create-warrant-form">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Citizen Involved</label>
+                        <select id="citizen" class="form-select" required>
+                            <option value="">Loading citizens...</option>
+                        </select>
+                        <div class="form-text">Select the suspect from the citizen database.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Crime / Charge</label>
+                        <select id="crime" class="form-select" required>
+                            <option value="">Loading crimes...</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Approving Judge</label>
+                        <input type="text" id="judge" class="form-control" placeholder="e.g. Hon. Judge Smith" required>
+                    </div>
+
+                    <hr>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-lg">Submit Warrant</button>
+                        <a href="{% url 'warrant-list' %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    const citizenSelect = document.getElementById('citizen');
+    const crimeSelect = document.getElementById('crime');
+    const form = document.getElementById('create-warrant-form');
+
+    // 1. Fetch Data for Dropdowns
+    try {
+        // NOTE: Ensure these API endpoints exist in your urls.py!
+        const [citizensRes, crimesRes] = await Promise.all([
+            fetch('/api/citizen/'), 
+            fetch('/api/crime/')
+        ]);
+
+        if(citizensRes.ok) {
+            const citizens = await citizensRes.json();
+            citizenSelect.innerHTML = '<option value="">-- Select Citizen --</option>';
+            citizens.forEach(c => {
+                // Assuming Citizen model has 'id', 'first_name', 'last_name'
+                citizenSelect.innerHTML += `<option value="${c.id}">${c.first_name} ${c.last_name}</option>`;
+            });
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const preSelectedID = urlParams.get('citizen');
+
+            if (preSelectedID) {
+                // Set the dropdown value
+                citizenSelect.value = preSelectedID;
+                
+                // Optional: Flash yellow so the user sees it's pre-filled
+                citizenSelect.style.backgroundColor = "#fff3cd"; 
+            }
+        }
+
+        if(crimesRes.ok) {
+            const crimes = await crimesRes.json();
+            crimeSelect.innerHTML = '<option value="">-- Select Charge --</option>';
+            crimes.forEach(c => {
+                // Assuming Crime model has 'section_number' and 'description'
+                crimeSelect.innerHTML += `<option value="${c.section_number}">${c.section_number} - ${c.description}</option>`;
+            });
+        }
+
+    } catch (err) {
+        console.error("Error loading dropdowns:", err);
+        citizenSelect.innerHTML = '<option>Error loading data</option>';
+    }
+
+    // 2. Handle Submit
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // --- VALIDATION STEP ---
+        const citizenId = citizenSelect.value;
+        const crimeId = crimeSelect.value;
+
+        if (!citizenId) {
+            alert("⚠️ Error: You must select a Citizen.");
+            return; // Stop here!
+        }
+        if (!crimeId) {
+            alert("⚠️ Error: You must select a Charge.");
+            return; // Stop here!
+        }
+        // -----------------------
+
+        const payload = {
+            // Now safe to parse because we know it's not empty
+            citizen_involved: parseInt(citizenId), 
+            
+            // Crime ID might be a string (like "459 PC") or int. 
+            // If your Crime model uses integer IDs, use parseInt(crimeId)
+            crime_number: crimeId,      
+            
+            approving_judge: document.getElementById('judge').value
+        };
+
+        try {
+            const response = await fetch('/api/warrant/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                window.location.href = "{% url 'warrant-list' %}";
+            } else {
+                const errorData = await response.json();
+                console.error("Server Error:", errorData);
+                alert('Error creating warrant:\n' + JSON.stringify(errorData, null, 2));
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Network error.");
+        }
+    });
+});
+</script>
+{% endblock %}

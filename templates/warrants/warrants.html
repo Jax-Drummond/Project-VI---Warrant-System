@@ -4,116 +4,124 @@
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-12">
-        <div class="card shadow-sm mt-4">
-            <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">⚠️ Active Warrants</h4>
-                <div id="loading-spinner" class="spinner-border spinner-border-sm text-light" role="status" style="display: none;">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-            </div>
-            
-            <div class="card-body">
-                <div class="row mb-4">
-                    <div class="col-md-12">
-                        <div class="input-group input-group-lg">
-                            <span class="input-group-text bg-light">🔍</span>
-                            <input type="text" id="search-box" class="form-control" placeholder="Search by Citizen Name, License Plate, or Crime...">
-                        </div>
-                        <small class="text-muted">Type to search. Results update automatically.</small>
-                    </div>
-                </div>
-
-                <div class="table-responsive">
-                    <table class="table table-hover table-striped align-middle">
-                        <thead class="table-dark">
-                            <tr>
-                                <th>ID</th>
-                                <th>Suspect / Citizen</th>
-                                <th>License Plate</th>
-                                <th>Charges / Crimes</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="warrant-table-body">
-                            </tbody>
-                    </table>
-                </div>
-                
-                <p id="no-results" class="text-center text-muted mt-3" style="display: none;">No warrants found matching your search.</p>
-            </div>
+  <div class="col-12">
+    <div class="card shadow-sm mt-4">
+      <div class="card-header bg-danger text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">⚠️ Active Warrants</h4>
+        <div id="loading-spinner" class="spinner-border spinner-border-sm text-light" role="status" style="display: none">
+          <span class="visually-hidden">Loading...</span>
         </div>
+      </div>
+
+      <div class="card-body">
+        <div class="d-flex justify-content-between mb-3">
+            <h5 class="card-title align-self-center">Search Database</h5>
+            <a href="{% url 'warrant-create' %}" class="btn btn-success">
+                ➕ Create New Warrant
+            </a>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col-md-12">
+            <div class="input-group input-group-lg">
+              <span class="input-group-text bg-light">🔍</span>
+              <input type="text" id="search-box" class="form-control" placeholder="Search by Citizen Name, License Plate, or Crime..." />
+            </div>
+            <small class="text-muted">Type to search. Results update automatically.</small>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover table-striped align-middle">
+            <thead class="table-dark">
+              <tr>
+                <th>ID</th>
+                <th>Suspect / Citizen</th>
+                <th>License Plate</th>
+                <th>Charges / Crimes</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="warrant-table-body">
+                </tbody>
+          </table>
+        </div>
+
+        <p id="no-results" class="text-center text-muted mt-3" style="display: none">
+          No warrants found matching your search.
+        </p>
+      </div>
     </div>
+  </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const searchBox = document.getElementById('search-box');
-        const tableBody = document.getElementById('warrant-table-body');
-        const spinner = document.getElementById('loading-spinner');
-        const noResults = document.getElementById('no-results');
+  document.addEventListener("DOMContentLoaded", () => {
+    const searchBox = document.getElementById("search-box");
+    const tableBody = document.getElementById("warrant-table-body");
+    const spinner = document.getElementById("loading-spinner");
+    const noResults = document.getElementById("no-results");
 
-        // Function to fetch data from your API
-        async function fetchWarrants(query = '') {
-            spinner.style.display = 'block'; // Show spinner
+    async function fetchWarrants(query = "") {
+      spinner.style.display = "block"; 
+
+      try {
+        const response = await fetch(`/api/warrant/?search=${encodeURIComponent(query)}`);
+        if (!response.ok) throw new Error("API Error");
+
+        const data = await response.json();
+        
+        tableBody.innerHTML = "";
+
+        if (data.length === 0) {
+          noResults.style.display = "block";
+        } else {
+          noResults.style.display = "none";
+          data.forEach((warrant) => {
             
-            try {
-                // Call the API with the search term
-                const response = await fetch(`/api/warrant/?search=${encodeURIComponent(query)}`);
-                
-                if (!response.ok) throw new Error('API Error');
-                
-                const data = await response.json();
-                console.log(data)
-                
-                // Clear current table
-                tableBody.innerHTML = '';
-                
-                // Populate Table
-                if (data.length === 0) {
-                    noResults.style.display = 'block';
-                } else {
-                    noResults.style.display = 'none';
-                    data.forEach(warrant => {
-                        const row = `
-                            <tr>
-                                <td>#${warrant.id}</td>
-                                <td class="fw-bold">${warrant.citizen_name}</td>
-                                <td><span class="badge bg-secondary">${warrant.linked_plates || 'N/A'}</span></td>
-                                <td>${warrant.crime_description}</td>
-                                <td>
-                                    <span class="badge ${warrant.status === 'Active' ? 'bg-danger' : 'bg-success'}">
-                                        ${warrant.status}
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary">View</button>
-                                </td>
-                            </tr>
-                        `;
-                        tableBody.innerHTML += row;
-                    });
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                tableBody.innerHTML = '<tr><td colspan="6" class="text-danger text-center">Error loading warrants.</td></tr>';
-            } finally {
-                spinner.style.display = 'none'; // Hide spinner
+            // Format plates array: ["A", "B"] -> "A, B"
+            let plateDisplay = "N/A";
+            if (Array.isArray(warrant.linked_plates) && warrant.linked_plates.length > 0) {
+                plateDisplay = warrant.linked_plates.join(', ');
             }
+
+            const row = `
+                <tr>
+                    <td>#${warrant.id}</td>
+                    <td class="fw-bold">${warrant.citizen_name}</td>
+                    <td><span class="badge bg-secondary">${plateDisplay}</span></td>
+                    <td>${warrant.crime_description}</td>
+                    <td>
+                        <span class="badge ${warrant.status === "O" ? "bg-danger" : "bg-success"}">
+                            ${warrant.status_label || 'Active'}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="/warrants/${warrant.id}/" class="btn btn-sm btn-outline-primary">View Details</a>
+                    </td>
+                </tr>
+            `;
+            tableBody.innerHTML += row;
+          });
         }
+      } catch (error) {
+        console.error("Error:", error);
+        tableBody.innerHTML = '<tr><td colspan="6" class="text-danger text-center">Error loading warrants.</td></tr>';
+      } finally {
+        spinner.style.display = "none";
+      }
+    }
 
-        // Initial Load
-        fetchWarrants();
+    fetchWarrants();
 
-        // Search Listener (Debounced)
-        let timeout = null;
-        searchBox.addEventListener('input', (e) => {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => {
-                fetchWarrants(e.target.value);
-            }, 300);
-        });
+    let timeout = null;
+    searchBox.addEventListener("input", (e) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        fetchWarrants(e.target.value);
+      }, 300);
     });
+  });
 </script>
 {% endblock %}

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Officer Roster{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card shadow mt-4">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">👮 Public Officer Roster</h4>
+                <a href="{% url 'dashboard' %}" class="btn btn-sm btn-light text-primary fw-bold">Login / Dashboard</a>
+            </div>
+            
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Badge #</th>
+                                <th>Officer Name</th>
+                                <th>Status</th>
+                                <th>Rank / Role</th>
+                            </tr>
+                        </thead>
+                        <tbody id="roster-body">
+                            </tbody>
+                    </table>
+                </div>
+                
+                <div id="loading" class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    const tableBody = document.getElementById('roster-body');
+    const loading = document.getElementById('loading');
+
+    try {
+        const response = await fetch('/api/officer/');
+        if (!response.ok) throw new Error("Could not fetch roster");
+        
+        const officers = await response.json();
+        
+        loading.style.display = 'none';
+        
+        officers.forEach(officer => {
+            const row = `
+                <tr>
+                    <td><span class="badge bg-dark">${officer.badge_number}</span></td>
+                    <td class="fw-bold">${officer.name}</td>
+                    <td>
+                        ${officer.is_active 
+                            ? '<span class="badge bg-success">On Duty / Active</span>' 
+                            : '<span class="badge bg-secondary">Off Duty / Inactive</span>'}
+                    </td>
+                    <td>
+                        ${officer.is_staff 
+                            ? '<span class="text-primary fw-bold">Command Staff</span>' 
+                            : 'Patrol Officer'}
+                    </td>
+                </tr>
+            `;
+            tableBody.innerHTML += row;
+        });
+
+    } catch (err) {
+        loading.innerHTML = `<p class="text-danger">Error loading roster: ${err.message}</p>`;
+    }
+});
+</script>
+{% endblock %}

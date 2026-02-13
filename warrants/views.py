@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.db.models import Q
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from django.contrib.auth.decorators import login_required
@@ -26,13 +26,15 @@ class WarrantViewSet(viewsets.ModelViewSet):
                 Q(crime_number__description__icontains=query)
             ).distinct()
 
-        return queryset
+            return queryset
 
 class CrimeViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Crime.objects.all()
     serializer_class = CrimeSerializer
 
 class CitizenViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Citizen.objects.all()
     serializer_class = CitizenSerializer
 
@@ -40,9 +42,28 @@ class LicensePlateViewSet(viewsets.ModelViewSet):
     queryset = License_Plate.objects.all()
     serializer_class = License_PlateSerializer
 
+    def get_queryset(self):
+        queryset = License_Plate.objects.all()
+        query = self.request.query_params.get('search', None)
+        if query:
+            queryset = queryset.filter(
+                # Search by Plate Number OR Owner Name
+                Q(plate_number__icontains=query) |
+                Q(owner__first_name__icontains=query) |
+                Q(owner__last_name__icontains=query)
+            )
+        return queryset
+
 class OfficerViewSet(viewsets.ModelViewSet):
     queryset = Officer.objects.all()
     serializer_class = OfficerSerializer
+    
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
 ## Frontend Views
 @login_required
@@ -53,3 +74,53 @@ def dashboard_view(request):
 def warrants_view(request):
     return render(request, 'warrants/warrants.html')
 
+@login_required
+def warrant_create_view(request):
+    return render(request, 'warrants/warrant_create.html')
+
+@login_required
+def warrant_detail_view(request, pk):
+    return render(request, 'warrants/warrant_detail.html', {'warrant_id': pk})
+
+@login_required
+def warrant_edit_view(request, pk):
+    return render(request, 'warrants/warrant_edit.html', {'warrant_id': pk})
+
+def officer_list_view(request):
+    return render(request, 'warrants/officer_list.html')
+
+@login_required
+def crime_list_view(request):
+    return render(request, 'warrants/crime_list.html')
+
+@login_required
+def citizen_list_view(request):
+    return render(request, 'warrants/citizen_list.html')
+
+@login_required
+def citizen_create_view(request):
+    return render(request, 'warrants/citizen_create.html')
+
+@login_required
+def citizen_detail_view(request, pk):
+    return render(request, 'warrants/citizen_detail.html', {'citizen_id': pk})
+
+@login_required
+def citizen_edit_view(request, pk):
+    return render(request, 'warrants/citizen_edit.html', {'citizen_id': pk})
+
+@login_required
+def plate_list_view(request):
+    return render(request, 'warrants/plate_list.html')
+
+@login_required
+def plate_create_view(request):
+    return render(request, 'warrants/plate_create.html')
+
+@login_required
+def plate_detail_view(request, pk):
+    return render(request, 'warrants/plate_detail.html', {'plate_id': pk})
+
+@login_required
+def plate_edit_view(request, pk):
+    return render(request, 'warrants/plate_edit.html', {'plate_id': pk})

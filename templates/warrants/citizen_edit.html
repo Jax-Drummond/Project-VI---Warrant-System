@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Citizen Profile{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow mt-4">
+            <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">✏️ Edit Citizen Profile</h4>
+                <span class="badge bg-dark">ID: #{{ citizen_id }}</span>
+            </div>
+            
+            <div class="card-body">
+                <div id="loading" class="text-center py-5">
+                    <div class="spinner-border text-warning" role="status"></div>
+                </div>
+
+                <form id="edit-citizen-form" style="display: none;">
+                    {% csrf_token %}
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">First Name</label>
+                            <input type="text" id="first_name" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Last Name</label>
+                            <input type="text" id="last_name" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Age</label>
+                            <input type="number" id="age" class="form-control" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Sex</label>
+                            <select id="sex" class="form-select" required>
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                                <option value="U">Unknown</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold">Race</label>
+                            <select id="race" class="form-select" required>
+                                <option value="BLACK">Black</option>
+                                <option value="EAST_ASIAN">East Asian</option>
+                                <option value="INDIGENOUS">Indigenous / Aboriginal</option>
+                                <option value="LATINO">Latino / Hispanic</option>
+                                <option value="MIDDLE_EASTERN">Middle Eastern</option>
+                                <option value="SOUTH_ASIAN">South Asian</option>
+                                <option value="SOUTHEAST_ASIAN">Southeast Asian</option>
+                                <option value="WHITE">White</option>
+                                <option value="PNTS">Prefer not to say</option>
+                                <option value="UNKNOWN">Unknown</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Notes / Marks / Scars</label>
+                        <textarea id="details" class="form-control" rows="4"></textarea>
+                    </div>
+
+                    <hr>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-warning btn-lg">💾 Save Changes</button>
+                        <a href="{% url 'citizen-detail' citizen_id %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    const citizenId = "{{ citizen_id }}";
+    const form = document.getElementById('edit-citizen-form');
+    const loading = document.getElementById('loading');
+
+    // 1. Fetch Current Data
+    try {
+        const response = await fetch(`/api/citizen/${citizenId}/`);
+        if (!response.ok) throw new Error("Could not load citizen data");
+        
+        const data = await response.json();
+        
+        // Populate Fields
+        document.getElementById('first_name').value = data.first_name;
+        document.getElementById('last_name').value = data.last_name;
+        document.getElementById('age').value = data.age;
+        document.getElementById('sex').value = data.sex;
+        document.getElementById('race').value = data.race;
+        document.getElementById('details').value = data.details || '';
+
+        // Show Form
+        loading.style.display = 'none';
+        form.style.display = 'block';
+
+    } catch (err) {
+        loading.innerHTML = `<p class="text-danger">Error: ${err.message}</p>`;
+    }
+
+    // 2. Handle Save
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const payload = {
+            first_name: document.getElementById('first_name').value,
+            last_name: document.getElementById('last_name').value,
+            age: parseInt(document.getElementById('age').value),
+            sex: document.getElementById('sex').value,
+            race: document.getElementById('race').value,
+            details: document.getElementById('details').value
+        };
+
+        try {
+            const response = await fetch(`/api/citizen/${citizenId}/`, {
+                method: 'PATCH', // Update existing record
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                // Redirect back to profile on success
+                window.location.href = "{% url 'citizen-detail' citizen_id %}";
+            } else {
+                const err = await response.json();
+                alert('Error updating profile: ' + JSON.stringify(err));
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Network error");
+        }
+    });
+});
+</script>
+{% endblock %}

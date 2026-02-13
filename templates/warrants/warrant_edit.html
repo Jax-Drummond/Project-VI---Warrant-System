@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Warrant{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow mt-4">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">✏️ Edit Warrant #{{ warrant_id }}</h4>
+            </div>
+            <div class="card-body">
+                <form id="edit-warrant-form">
+                    {% csrf_token %}
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">Current Status</label>
+                        <select id="status" class="form-select form-select-lg bg-light" required>
+                            <option value="O">Open</option>
+                            <option value="C">Closed / Arrested</option>
+                        </select>
+                        <div class="form-text">Changing this will update the warrant's live status.</div>
+                    </div>
+
+                    <hr>
+
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Citizen</label>
+                        <input type="text" id="citizen_name" class="form-control" disabled>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Charge</label>
+                        <input type="text" id="crime_desc" class="form-control" disabled>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Approving Judge (Editable)</label>
+                        <input type="text" id="judge" class="form-control">
+                    </div>
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-warning btn-lg">💾 Save Changes</button>
+                        <a href="{% url 'warrant-detail' warrant_id %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    const warrantId = "{{ warrant_id }}";
+    const form = document.getElementById('edit-warrant-form');
+    
+    // 1. Fetch Current Data
+    try {
+        const response = await fetch(`/api/warrant/${warrantId}/`);
+        if (!response.ok) throw new Error("Could not load warrant data");
+        
+        const data = await response.json();
+        
+        // Populate Form
+        document.getElementById('status').value = data.status; 
+        document.getElementById('judge').value = data.approving_judge;
+        
+        // Populate Read-Only fields
+        document.getElementById('citizen_name').value = data.citizen_name;
+        document.getElementById('crime_desc').value = data.crime_description;
+
+    } catch (err) {
+        alert("Error loading data: " + err.message);
+    }
+
+    // 2. Handle Update (PATCH)
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const payload = {
+            status: document.getElementById('status').value,
+            approving_judge: document.getElementById('judge').value
+        };
+
+        try {
+            const response = await fetch(`/api/warrant/${warrantId}/`, {
+                method: 'PATCH', // PATCH updates only the fields we send
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                // Redirect back to the detail view
+                window.location.href = `/warrants/${warrantId}/`;
+            } else {
+                const errorData = await response.json();
+                alert('Error updating warrant: ' + JSON.stringify(errorData));
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Network error.");
+        }
+    });
+});
+</script>
+{% endblock %}

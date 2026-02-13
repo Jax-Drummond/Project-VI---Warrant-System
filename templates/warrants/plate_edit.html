@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Plate {{ plate_id }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow mt-4">
+            <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">✏️ Edit Vehicle Registration</h4>
+            </div>
+            
+            <div class="card-body">
+                <div id="loading" class="text-center py-5">
+                    <div class="spinner-border text-warning" role="status"></div>
+                </div>
+
+                <form id="edit-plate-form" style="display: none;">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">License Plate</label>
+                        <input type="text" id="plate_number" class="form-control bg-light" disabled>
+                        <div class="form-text">To change the plate number, delete this record and create a new one.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Registered Owner</label>
+                        <select id="owner" class="form-select" required>
+                            <option value="">Loading owners...</option>
+                        </select>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Make</label>
+                            <input type="text" id="make" class="form-control" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Model</label>
+                            <input type="text" id="model" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-warning btn-lg">💾 Save Changes</button>
+                        <a href="{% url 'plate-detail' plate_id %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    const plateId = "{{ plate_id }}";
+    const form = document.getElementById('edit-plate-form');
+    const loading = document.getElementById('loading');
+    const ownerSelect = document.getElementById('owner');
+
+    try {
+        // 1. Fetch BOTH the Plate Data and the Citizen List in parallel
+        const [plateRes, citizensRes] = await Promise.all([
+            fetch(`/api/license_plate/${plateId}/`),
+            fetch('/api/citizen/')
+        ]);
+
+        if (!plateRes.ok) throw new Error("Could not load plate data");
+        if (!citizensRes.ok) throw new Error("Could not load citizen list");
+
+        const plate = await plateRes.json();
+        const citizens = await citizensRes.json();
+
+        // 2. Populate Owner Dropdown
+        ownerSelect.innerHTML = '<option value="">-- Select Owner --</option>';
+        citizens.forEach(c => {
+            ownerSelect.innerHTML += `<option value="${c.id}">${c.first_name} ${c.last_name}</option>`;
+        });
+
+        // 3. Fill Form Fields
+        document.getElementById('plate_number').value = plate.plate_number;
+        document.getElementById('make').value = plate.car_make;
+        document.getElementById('model').value = plate.car_model;
+        
+        // Set selected owner
+        ownerSelect.value = plate.owner;
+
+        // Show Form
+        loading.style.display = 'none';
+        form.style.display = 'block';
+
+    } catch (err) {
+        loading.innerHTML = `<p class="text-danger">Error: ${err.message}</p>`;
+    }
+
+    // 4. Handle Save
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const payload = {
+            owner: parseInt(ownerSelect.value),
+            car_make: document.getElementById('make').value,
+            car_model: document.getElementById('model').value
+        };
+
+        try {
+            const response = await fetch(`/api/license_plate/${plateId}/`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                window.location.href = "{% url 'plate-detail' plate_id %}";
+            } else {
+                const err = await response.json();
+                alert('Error updating plate: ' + JSON.stringify(err));
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Network error");
+        }
+    });
+});
+</script>
+{% endblock %}
