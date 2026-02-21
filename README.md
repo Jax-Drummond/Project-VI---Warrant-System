@@ -99,7 +99,7 @@ docker compose exec web python manage.py createsuperuser
 * **Admin Panel:** [http://localhost:8000/admin](https://www.google.com/search?q=http://localhost:8000/admin)
 
 
-6. **Run the Rests:**
+6. **Run the Tests:**
    1. Install Apache Jmeter
    2. open apache-jmeter-5.6.3\bin\jmeter.properties and set ```#CookieManager.save.cookies=false``` to ```CookieManager.save.cookies=true``` and uncomment it. save the file. This only needs to be done once.
    3. run apache-jmeter by opening apache-jmeter-5.6.3\bin\ApacheJMeter.jar (requires JRE or JDK)
