@@ -7,11 +7,12 @@
     <div class="col-md-10">
         <div class="card shadow mt-4">
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">👮 Public Officer Roster</h4>
+                <h4 class="mb-0">Active Officer Roster</h4>
                 <a href="{% url 'dashboard' %}" class="btn btn-sm btn-light text-primary fw-bold">Login / Dashboard</a>
             </div>
-            
             <div class="card-body">
+                <input type="text" id="search-box" class="form-control form-control-lg mb-4" placeholder="Search by Badge Number or Name...">
+
                 <div class="table-responsive">
                     <table class="table table-hover align-middle">
                         <thead class="table-light">
@@ -19,58 +20,75 @@
                                 <th>Badge #</th>
                                 <th>Officer Name</th>
                                 <th>Status</th>
-                                <th>Rank / Role</th>
+                                <th>Role</th>
                             </tr>
                         </thead>
-                        <tbody id="roster-body">
-                            </tbody>
+                        <tbody id="table-body"></tbody>
                     </table>
+
+                    <div class="d-flex justify-content-between mt-3">
+                        <button id="prev-btn" class="btn btn-secondary" disabled>Previous</button>
+                        <span id="page-info" class="align-self-center fw-bold text-muted"></span>
+                        <button id="next-btn" class="btn btn-secondary" disabled>Next</button>
+                    </div>
                 </div>
-                
-                <div id="loading" class="text-center py-4">
-                    <div class="spinner-border text-primary" role="status"></div>
-                </div>
+                <div id="loading" class="text-center py-3" style="display: none;"><div class="spinner-border text-info"></div></div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', async () => {
-    const tableBody = document.getElementById('roster-body');
+document.addEventListener('DOMContentLoaded', () => {
+    const tableBody = document.getElementById('table-body');
+    const searchBox = document.getElementById('search-box');
     const loading = document.getElementById('loading');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const pageInfo = document.getElementById('page-info');
 
-    try {
-        const response = await fetch('/api/officer/');
-        if (!response.ok) throw new Error("Could not fetch roster");
-        
-        const officers = await response.json();
-        
-        loading.style.display = 'none';
-        
-        officers.forEach(officer => {
-            const row = `
-                <tr>
-                    <td><span class="badge bg-dark">${officer.badge_number}</span></td>
-                    <td class="fw-bold">${officer.name}</td>
-                    <td>
-                        ${officer.is_active 
-                            ? '<span class="badge bg-success">On Duty / Active</span>' 
-                            : '<span class="badge bg-secondary">Off Duty / Inactive</span>'}
-                    </td>
-                    <td>
-                        ${officer.is_staff 
-                            ? '<span class="text-primary fw-bold">Command Staff</span>' 
-                            : 'Patrol Officer'}
-                    </td>
-                </tr>
-            `;
-            tableBody.innerHTML += row;
-        });
+    let currentNext = null, currentPrev = null, searchTimeout = null;
 
-    } catch (err) {
-        loading.innerHTML = `<p class="text-danger">Error loading roster: ${err.message}</p>`;
+    async function fetchData(url = '/api/officer/') {
+        loading.style.display = 'block'; tableBody.innerHTML = '';
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            renderTable(data.results);
+            currentNext = data.next; currentPrev = data.previous;
+            pageInfo.textContent = `Total Records: ${data.count}`;
+            nextBtn.disabled = !currentNext; prevBtn.disabled = !currentPrev;
+        } catch (err) { tableBody.innerHTML = `<tr><td colspan="4" class="text-danger text-center">Error: ${err.message}</td></tr>`; } 
+        finally { loading.style.display = 'none'; }
     }
+
+    function renderTable(items) {
+        if(items.length === 0) { tableBody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No officers found.</td></tr>'; return; }
+        items.forEach(o => {
+            const statusBadge = o.is_active ? '<span class="badge bg-success">Active Duty</span>' : '<span class="badge bg-secondary">Off Duty</span>';
+            const roleBadge = o.is_staff ? '<span class="badge bg-danger">Command Staff</span>' : '<span class="badge bg-primary">Patrol</span>';
+
+            tableBody.innerHTML += `
+                <tr>
+                    <td><span class="badge bg-dark fs-6">${o.badge_number}</span></td>
+                    <td class="fw-bold text-uppercase">Ofc. ${o.name}</td>
+                    <td>${statusBadge}</td>
+                    <td>${roleBadge}</td>
+                </tr>`;
+        });
+    }
+
+    fetchData();
+
+    nextBtn.addEventListener('click', () => { if (currentNext) fetchData(currentNext); });
+    prevBtn.addEventListener('click', () => { if (currentPrev) fetchData(currentPrev); });
+    searchBox.addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            const term = e.target.value.trim();
+            fetchData(term ? `/api/officer/?search=${encodeURIComponent(term)}` : '/api/officer/');
+        }, 300);
+    });
 });
 </script>
 {% endblock %}

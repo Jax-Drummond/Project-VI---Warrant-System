@@ -7,10 +7,9 @@
     <div class="col-12">
         <div class="card shadow mt-4">
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">👥 Civilian Database</h4>
-                <a href="{% url 'citizen-create' %}" class="btn btn-light text-primary fw-bold">➕ New Booking / Intake</a>
+                <h4 class="mb-0">Civilian Database</h4>
+                <a href="{% url 'citizen-create' %}" class="btn btn-light text-primary fw-bold">＋ New Booking / Intake</a>
             </div>
-            
             <div class="card-body">
                 <input type="text" id="search-box" class="form-control form-control-lg mb-4" placeholder="Search by Name (e.g. 'John Doe')...">
 
@@ -27,10 +26,15 @@
                             </tr>
                         </thead>
                         <tbody id="citizen-table-body">
-                            </tbody>
+                        </tbody>
                     </table>
+                    <div class="d-flex justify-content-between mt-3">
+                        <button id="prev-btn" class="btn btn-secondary" disabled>Previous</button>
+                        <span id="page-info" class="align-self-center fw-bold text-muted"></span>
+                        <button id="next-btn" class="btn btn-secondary" disabled>Next</button>
+                    </div>
                 </div>
-                <div id="loading" class="text-center py-3">
+                <div id="loading" class="text-center py-3" style="display: none;">
                     <div class="spinner-border text-primary" role="status"></div>
                 </div>
             </div>
@@ -39,39 +43,60 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
     const tableBody = document.getElementById('citizen-table-body');
     const searchBox = document.getElementById('search-box');
     const loading = document.getElementById('loading');
-    let allCitizens = [];
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const pageInfo = document.getElementById('page-info');
 
-    // 1. Fetch All Citizens
-    try {
-        const response = await fetch('/api/citizen/');
-        if (!response.ok) throw new Error("Failed to load database");
-        allCitizens = await response.json();
-        renderTable(allCitizens);
-        loading.style.display = 'none';
-    } catch (err) {
-        loading.innerHTML = `<p class="text-danger">Error: ${err.message}</p>`;
+    let currentNext = null;
+    let currentPrev = null;
+    let searchTimeout = null;
+
+    async function fetchCitizens(url = '/api/citizen/') {
+        loading.style.display = 'block';
+        tableBody.innerHTML = '';
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error("Failed to load database");
+
+            const data = await response.json();
+
+            renderTable(data.results);
+
+            // Update Pagination State
+            currentNext = data.next;
+            currentPrev = data.previous;
+            pageInfo.textContent = `Total Records: ${data.count}`;
+
+            nextBtn.disabled = !currentNext;
+            prevBtn.disabled = !currentPrev;
+
+        } catch (err) {
+            tableBody.innerHTML = `<tr><td colspan="6" class="text-center text-danger">Error: ${err.message}</td></tr>`;
+        } finally {
+            loading.style.display = 'none';
+        }
     }
 
-    // 2. Render Function
-    function renderTable(data) {
+    function renderTable(citizens) {
         tableBody.innerHTML = '';
-        if(data.length === 0) {
+        if(citizens.length === 0) {
             tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No records found.</td></tr>';
             return;
         }
 
-        data.forEach(c => {
+        citizens.forEach(c => {
             const row = `
                 <tr>
                     <td><span class="badge bg-secondary">#${c.id}</span></td>
                     <td class="fw-bold">${c.first_name} ${c.last_name}</td>
                     <td>${c.age}</td>
-                    <td>${c.sex_label}</td>
-                    <td>${c.race_label}</td>
+                    <td>${c.sex_label || c.sex}</td>
+                    <td>${c.race_label || c.race}</td>
                     <td>
                         <a href="/citizens/${c.id}/" class="btn btn-sm btn-outline-primary">View Profile</a>
                     </td>
@@ -81,14 +106,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // 3. Search Logic
+    fetchCitizens();
+
+    nextBtn.addEventListener('click', () => {
+        if (currentNext) fetchCitizens(currentNext);
+    });
+
+    prevBtn.addEventListener('click', () => {
+        if (currentPrev) fetchCitizens(currentPrev);
+    });
+
     searchBox.addEventListener('input', (e) => {
-        const term = e.target.value.toLowerCase();
-        const filtered = allCitizens.filter(c => 
-            c.first_name.toLowerCase().includes(term) || 
-            c.last_name.toLowerCase().includes(term)
-        );
-        renderTable(filtered);
+        clearTimeout(searchTimeout);
+
+        // Wait 300ms after the user stops typing before hitting the API
+        searchTimeout = setTimeout(() => {
+            const term = e.target.value.trim();
+            const url = term ? `/api/citizen/?search=${encodeURIComponent(term)}` : '/api/citizen/';
+            fetchCitizens(url);
+        }, 300); 
     });
 });
 </script>

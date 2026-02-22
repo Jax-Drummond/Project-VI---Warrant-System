@@ -15,7 +15,7 @@
                     <hr>
                     <div class="d-grid gap-2 mb-3">
                         <a href="{% url 'citizen-edit' citizen_id %}" class="btn btn-outline-warning btn-sm">
-                            ✏️ Edit Profile
+                            Edit Profile
                         </a>
                     </div>
                     <ul class="list-group list-group-flush">
@@ -41,9 +41,9 @@
             
             <div class="card shadow mb-4">
                 <div class="card-header bg-secondary text-white">
-                    <h5 class="mb-0">🚗 Known Vehicles</h5>
-                    <a href="{% url 'plate-create' %}?owner={{ citizen_id }}" class="btn btn-sm btn-light text-dark fw-bold">
-                        ➕ Add Vehicle
+                    <h5 class="mb-0">Known Vehicles</h5>
+                    <a href="{% url 'plate-create' %}?owner={{ citizen_id }}" class="btn btn-sm btn-light text-dark fw-bold mt-2">
+                        ＋ Add Vehicle
                     </a>
                 </div>
                 <div class="card-body">
@@ -55,9 +55,9 @@
 
             <div class="card shadow">
                 <div class="card-header bg-danger text-white">
-                    <h5 class="mb-0">⚠️ Criminal History / Warrants</h5>
-                    <a href="{% url 'warrant-create' %}?citizen={{ citizen_id }}" class="btn btn-sm btn-light text-danger fw-bold">
-                        ➕ Issue Warrant
+                    <h5 class="mb-0">Criminal History / Warrants</h5>
+                    <a href="{% url 'warrant-create' %}?citizen={{ citizen_id }}" class="btn btn-sm btn-light text-danger fw-bold mt-2">
+                        ＋ Issue Warrant
                     </a>
                 </div>
                 <div class="card-body">
@@ -84,13 +84,11 @@
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
     const citizenId = "{{ citizen_id }}";
-    
+
     try {
-        // 1. Fetch Citizen Details
         const response = await fetch(`/api/citizen/${citizenId}/`);
         if (!response.ok) throw new Error("Citizen not found");
         const citizen = await response.json();
-        // Populate Left Column
         document.getElementById('profile-name').textContent = `${citizen.first_name} ${citizen.last_name}`;
         document.getElementById('profile-id').textContent = '#' + citizen.id;
         document.getElementById('profile-age').textContent = citizen.age;
@@ -98,18 +96,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('profile-race').textContent = citizen.race_label;
         document.getElementById('profile-details').textContent = citizen.details || "No notes.";
 
-        // 2. Fetch/Populate Vehicles (Assuming citizen has 'plates' or 'license_plate_set')
         const vehicleList = document.getElementById('vehicle-list');
         vehicleList.innerHTML = '';
-        
-        // Check both possible field names just in case
+
         const plates = citizen.vehicles || citizen.license_plate_set || [];
-        
-        
         if (plates.length > 0) {
             plates.forEach(p => {
-                // p might be an object (if nested) or just a number string
-                // Adjust based on your serializer. Assuming it returns objects:
                 const plateNum = p.plate_number || p; 
                 vehicleList.innerHTML += `<span class="badge bg-dark fs-6">${plateNum}</span>`;
             });
@@ -117,10 +109,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             vehicleList.innerHTML = '<span class="text-muted">No registered vehicles.</span>';
         }
 
-        // 3. Fetch Warrant History (Using Search API)
-        // We search by their name to find linked warrants
         const warrants = citizen.warrants;
-        
         const historyBody = document.getElementById('warrant-history-body');
         const noWarrants = document.getElementById('no-warrants');
 

@@ -7,7 +7,7 @@
     <div class="col-md-8">
         <div class="card shadow mt-4">
             <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">✏️ Edit Vehicle Registration</h4>
+                <h4 class="mb-0">Edit Vehicle Registration</h4>
             </div>
             
             <div class="card-body">
@@ -44,7 +44,7 @@
 
                     <hr>
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-warning btn-lg">💾 Save Changes</button>
+                        <button type="submit" class="btn btn-warning btn-lg">Save Changes</button>
                         <a href="{% url 'plate-detail' plate_id %}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
@@ -60,30 +60,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     const loading = document.getElementById('loading');
     const ownerSelect = document.getElementById('owner');
 
+    async function fetchAllPages(url) {
+        let allResults = [];
+        let nextUrl = url;
+        while (nextUrl) {
+            const response = await fetch(nextUrl);
+            const data = await response.json();
+            allResults = allResults.concat(data.results);
+            nextUrl = data.next;
+        }
+        return allResults;
+    }
+
     try {
-        // 1. Fetch BOTH the Plate Data and the Citizen List in parallel
-        const [plateRes, citizensRes] = await Promise.all([
+        // Fetch specific plate data AND paginated citizens
+        const [plateRes, citizens] = await Promise.all([
             fetch(`/api/license_plate/${plateId}/`),
-            fetch('/api/citizen/')
+            fetchAllPages('/api/citizen/')
         ]);
 
         if (!plateRes.ok) throw new Error("Could not load plate data");
-        if (!citizensRes.ok) throw new Error("Could not load citizen list");
-
         const plate = await plateRes.json();
-        const citizens = await citizensRes.json();
 
-        // 2. Populate Owner Dropdown
+        // Populate Owner Dropdown
         ownerSelect.innerHTML = '<option value="">-- Select Owner --</option>';
         citizens.forEach(c => {
             ownerSelect.innerHTML += `<option value="${c.id}">${c.first_name} ${c.last_name}</option>`;
         });
 
-        // 3. Fill Form Fields
+        // Fill Form Fields
         document.getElementById('plate_number').value = plate.plate_number;
         document.getElementById('make').value = plate.car_make;
         document.getElementById('model').value = plate.car_model;
-        
+
         // Set selected owner
         ownerSelect.value = plate.owner;
 
@@ -98,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 4. Handle Save
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const payload = {
             plate_number: plateId,
             owner: parseInt(ownerSelect.value),
