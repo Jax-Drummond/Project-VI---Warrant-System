@@ -7,7 +7,7 @@
     <div class="col-md-8">
         <div class="card shadow mt-4">
             <div class="card-header bg-success text-white">
-                <h4 class="mb-0">📝 New Citizen Intake</h4>
+                <h4 class="mb-0">New Citizen Intake</h4>
             </div>
             <div class="card-body">
                 <form id="create-citizen-form">
@@ -75,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
         const payload = {
             first_name: document.getElementById('first_name').value,
             last_name: document.getElementById('last_name').value,
