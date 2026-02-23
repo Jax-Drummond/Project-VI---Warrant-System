@@ -13,13 +13,11 @@
         <div id="content" class="card shadow" style="display: none;">
             <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
                 <h4 class="mb-0">Warrant Details</h4>
-                
                 <div>
                     <span id="detail-status" class="badge bg-secondary me-2">Loading...</span>
                     <span id="detail-id" class="badge bg-light text-dark"></span>
                 </div>
             </div>
-            
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-md-6">
@@ -44,10 +42,8 @@
                 </div>
 
                 <hr>
-                
                 <div class="d-flex justify-content-between">
                     <a href="{% url 'warrant-list' %}" class="btn btn-secondary">← Back to List</a>
-                    
                     <div>
                         <a href="{% url 'warrant-edit' warrant_id %}" class="btn btn-warning me-2">Edit Status</a>
                         <button id="delete-btn" class="btn btn-danger">Delete Warrant</button>
@@ -61,13 +57,11 @@
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
     const warrantId = "{{ warrant_id }}";
-    
     try {
         const response = await fetch(`/api/warrant/${warrantId}/`);
         if (!response.ok) throw new Error("Warrant not found");
-        
         const data = await response.json();
-        
+
         // 1. Fill Basic Data
         document.getElementById('detail-id').textContent = '#' + data.id;
         document.getElementById('detail-name').textContent = data.citizen_name;
@@ -89,7 +83,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             statusEl.classList.replace('bg-secondary', 'bg-warning'); // Void/Other
             statusEl.classList.add('text-dark');
         }
-        
+
         // 3. Fill Plates
         const platesDiv = document.getElementById('detail-plates');
         if (data.linked_plates && data.linked_plates.length > 0) {
@@ -103,7 +97,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Show Card
         document.getElementById('loading').style.display = 'none';
         document.getElementById('content').style.display = 'block';
-        
+
         // Handle Delete
         document.getElementById('delete-btn').addEventListener('click', async () => {
             if(confirm("Are you sure you want to delete this warrant?")) {

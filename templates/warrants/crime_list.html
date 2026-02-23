@@ -1,78 +1,84 @@
 {% extends "base.html" %}
 
-{% block title %}Penal Code Reference{% endblock %}
+{% block title %}Penal Code{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-10">
         <div class="card shadow mt-4">
-            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">📜 Penal Code Reference</h4>
-                <a href="{% url 'dashboard' %}" class="btn btn-sm btn-outline-light">Back to Dashboard</a>
+            <div class="card-header bg-secondary text-white">
+                <h4 class="mb-0">Penal Code Reference</h4>
             </div>
-            
             <div class="card-body">
-                <input type="text" id="search-input" class="form-control form-control-lg mb-4" placeholder="Search laws (e.g. 'Theft', '187'...)">
+                <input type="text" id="search-box" class="form-control form-control-lg mb-4" placeholder="Search by Code (e.g. 'PC 187') or Description...">
 
                 <div class="table-responsive">
-                    <table class="table table-hover table-bordered">
+                    <table class="table table-hover align-middle">
                         <thead class="table-light">
                             <tr>
-                                <th style="width: 15%">Section #</th>
-                                <th>Description / Definition</th>
+                                <th style="width: 25%;">Section Number</th>
+                                <th>Description</th>
                             </tr>
                         </thead>
-                        <tbody id="crime-table-body">
-                            </tbody>
+                        <tbody id="table-body"></tbody>
                     </table>
+                    <div class="d-flex justify-content-between mt-3">
+                        <button id="prev-btn" class="btn btn-secondary" disabled>Previous</button>
+                        <span id="page-info" class="align-self-center fw-bold text-muted"></span>
+                        <button id="next-btn" class="btn btn-secondary" disabled>Next</button>
+                    </div>
                 </div>
+                <div id="loading" class="text-center py-3" style="display: none;"><div class="spinner-border text-secondary"></div></div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', async () => {
-    const tableBody = document.getElementById('crime-table-body');
-    const searchInput = document.getElementById('search-input');
-    let allCrimes = [];
+document.addEventListener('DOMContentLoaded', () => {
+    const tableBody = document.getElementById('table-body');
+    const searchBox = document.getElementById('search-box');
+    const loading = document.getElementById('loading');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    const pageInfo = document.getElementById('page-info');
 
-    // 1. Fetch All Crimes
-    try {
-        const response = await fetch('/api/crime/'); // Ensure you have this Endpoint!
-        if (!response.ok) throw new Error("Failed to load Penal Code");
-        allCrimes = await response.json();
-        renderTable(allCrimes);
-    } catch (err) {
-        tableBody.innerHTML = `<tr><td colspan="2" class="text-danger">Error loading laws: ${err.message}</td></tr>`;
+    let currentNext = null, currentPrev = null, searchTimeout = null;
+
+    async function fetchData(url = '/api/crime/') {
+        loading.style.display = 'block'; tableBody.innerHTML = '';
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            renderTable(data.results);
+            currentNext = data.next; currentPrev = data.previous;
+            pageInfo.textContent = `Total Records: ${data.count}`;
+            nextBtn.disabled = !currentNext; prevBtn.disabled = !currentPrev;
+        } catch (err) { tableBody.innerHTML = `<tr><td colspan="2" class="text-danger text-center">Error: ${err.message}</td></tr>`; }
+        finally { loading.style.display = 'none'; }
     }
 
-    // 2. Filter Function
-    function renderTable(data) {
-        tableBody.innerHTML = '';
-        if (data.length === 0) {
-            tableBody.innerHTML = '<tr><td colspan="2" class="text-center text-muted">No matching laws found.</td></tr>';
-            return;
-        }
-        data.forEach(crime => {
-            const row = `
+    function renderTable(items) {
+        if(items.length === 0) { tableBody.innerHTML = '<tr><td colspan="2" class="text-center text-muted">No crimes found.</td></tr>'; return; }
+        items.forEach(c => {
+            tableBody.innerHTML += `
                 <tr>
-                    <td><span class="badge bg-secondary fs-6">${crime.section_number}</span></td>
-                    <td>${crime.description}</td>
-                </tr>
-            `;
-            tableBody.innerHTML += row;
+                    <td><span class="badge bg-dark fs-6">${c.section_number}</span></td>
+                    <td class="fw-bold">${c.description}</td>
+                </tr>`;
         });
     }
 
-    // 3. Search Logic
-    searchInput.addEventListener('input', (e) => {
-        const term = e.target.value.toLowerCase();
-        const filtered = allCrimes.filter(crime => 
-            crime.section_number.toLowerCase().includes(term) || 
-            crime.description.toLowerCase().includes(term)
-        );
-        renderTable(filtered);
+    fetchData();
+
+    nextBtn.addEventListener('click', () => { if (currentNext) fetchData(currentNext); });
+    prevBtn.addEventListener('click', () => { if (currentPrev) fetchData(currentPrev); });
+    searchBox.addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            const term = e.target.value.trim();
+            fetchData(term ? `/api/crime/?search=${encodeURIComponent(term)}` : '/api/crime/');
+        }, 300);
     });
 });
 </script>

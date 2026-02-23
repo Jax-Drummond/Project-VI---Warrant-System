@@ -99,6 +99,13 @@ docker compose exec web python manage.py createsuperuser
 * **Admin Panel:** [http://localhost:8000/admin](https://www.google.com/search?q=http://localhost:8000/admin)
 
 
+6. **Run the Tests:**
+   1. Install Apache Jmeter
+   2. open apache-jmeter-5.6.3\bin\jmeter.properties and set ```#CookieManager.save.cookies=false``` to ```CookieManager.save.cookies=true``` and uncomment it. save the file. This only needs to be done once.
+   3. run apache-jmeter by opening apache-jmeter-5.6.3\bin\ApacheJMeter.jar (requires JRE or JDK)
+   4. open the performance test plan in jmeter which is in Project-VI---Warrant-System\Performance Test Plan.jmx
+   5. ensure the docker environment is running then click the green start button to start the test.
+   6. the same process can be used to run the unit tests.
 
 ---
 

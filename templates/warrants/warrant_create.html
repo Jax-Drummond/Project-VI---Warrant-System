@@ -50,74 +50,61 @@ document.addEventListener('DOMContentLoaded', async () => {
     const crimeSelect = document.getElementById('crime');
     const form = document.getElementById('create-warrant-form');
 
-    // 1. Fetch Data for Dropdowns
+    async function fetchAllPages(url) {
+        let allResults = [];
+        let nextUrl = url;
+        while (nextUrl) {
+            const response = await fetch(nextUrl);
+            const data = await response.json();
+            allResults = allResults.concat(data.results);
+            nextUrl = data.next;
+        }
+        return allResults;
+    }
+
     try {
-        // NOTE: Ensure these API endpoints exist in your urls.py!
-        const [citizensRes, crimesRes] = await Promise.all([
-            fetch('/api/citizen/'), 
-            fetch('/api/crime/')
+        // Fetch data in parallel
+        const [citizens, crimes] = await Promise.all([
+            fetchAllPages('/api/citizen/'),
+            fetchAllPages('/api/crime/')
         ]);
 
-        if(citizensRes.ok) {
-            const citizens = await citizensRes.json();
-            citizenSelect.innerHTML = '<option value="">-- Select Citizen --</option>';
-            citizens.forEach(c => {
-                // Assuming Citizen model has 'id', 'first_name', 'last_name'
-                citizenSelect.innerHTML += `<option value="${c.id}">${c.first_name} ${c.last_name}</option>`;
-            });
+        // Populate Citizens
+        citizenSelect.innerHTML = '<option value="">-- Select Suspect --</option>';
+        citizens.forEach(c => {
+            citizenSelect.innerHTML += `<option value="${c.id}">${c.first_name} ${c.last_name}</option>`;
+        });
 
-            const urlParams = new URLSearchParams(window.location.search);
-            const preSelectedID = urlParams.get('citizen');
-
-            if (preSelectedID) {
-                // Set the dropdown value
-                citizenSelect.value = preSelectedID;
-                
-                // Optional: Flash yellow so the user sees it's pre-filled
-                citizenSelect.style.backgroundColor = "#fff3cd"; 
-            }
-        }
-
-        if(crimesRes.ok) {
-            const crimes = await crimesRes.json();
-            crimeSelect.innerHTML = '<option value="">-- Select Charge --</option>';
-            crimes.forEach(c => {
-                // Assuming Crime model has 'section_number' and 'description'
-                crimeSelect.innerHTML += `<option value="${c.section_number}">${c.section_number} - ${c.description}</option>`;
-            });
-        }
+        // Populate Crimes
+        crimeSelect.innerHTML = '<option value="">-- Select Crime --</option>';
+        crimes.forEach(c => {
+            crimeSelect.innerHTML += `<option value="${c.section_number}">${c.section_number} - ${c.description}</option>`;
+        });
 
     } catch (err) {
         console.error("Error loading dropdowns:", err);
-        citizenSelect.innerHTML = '<option>Error loading data</option>';
     }
-
     // 2. Handle Submit
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
-        // --- VALIDATION STEP ---
+
         const citizenId = citizenSelect.value;
         const crimeId = crimeSelect.value;
 
         if (!citizenId) {
             alert("⚠️ Error: You must select a Citizen.");
-            return; // Stop here!
+            return;
         }
         if (!crimeId) {
             alert("⚠️ Error: You must select a Charge.");
-            return; // Stop here!
+            return;
         }
-        // -----------------------
 
         const payload = {
-            // Now safe to parse because we know it's not empty
-            citizen_involved: parseInt(citizenId), 
-            
-            // Crime ID might be a string (like "459 PC") or int. 
-            // If your Crime model uses integer IDs, use parseInt(crimeId)
-            crime_number: crimeId,      
-            
+            citizen_involved: parseInt(citizenId),
+
+            crime_number: crimeId,
+
             approving_judge: document.getElementById('judge').value
         };
 

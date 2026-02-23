@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.db.models import Q
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 from django.contrib.auth.decorators import login_required
 from .models import *
 from .serializer import *
@@ -13,23 +13,8 @@ audit_logger = logging.getLogger("audit")
 class WarrantViewSet(viewsets.ModelViewSet):
     serializer_class = WarrantSerializer
     permission_classes = [IsAuthenticated]
+    queryset = Warrant.objects.all()
 
-    def get_queryset(self):
-        queryset = Warrant.objects.all()
-
-        # Get the 'search' param from the URL (e.g., ?search=Jones)
-        query = self.request.query_params.get('search', None)
-
-        if query:
-            queryset = queryset.filter(
-                Q(citizen_involved__first_name__icontains=query) |
-                Q(citizen_involved__last_name__icontains=query) |
-                Q(citizen_involved__plates__plate_number__icontains=query) |
-                Q(crime_number__description__icontains=query)
-            ).distinct()
-
-        return queryset
-    
     def perform_create(self, serializer):
         obj = serializer.save()
         audit_logger.info("write warrant.create actor=%s id=%s", self.request.user.pk, obj.pk)
@@ -41,6 +26,9 @@ class WarrantViewSet(viewsets.ModelViewSet):
     def perform_destroy(self, instance):
         audit_logger.info("write warrant.delete actor=%s id=%s", self.request.user.pk, instance.pk)
         instance.delete()
+        
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['citizen_involved__first_name', 'citizen_involved__last_name', 'citizen_involved__plates__plate_number', 'crime_number__description']
 
 class CrimeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -58,11 +46,17 @@ class CrimeViewSet(viewsets.ModelViewSet):
     def perform_destroy(self, instance):
         audit_logger.info("write crime.delete actor=%s id=%s", self.request.user.pk, instance.pk)
         instance.delete()
+        
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['section_number', 'description']
 
 class CitizenViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Citizen.objects.all()
     serializer_class = CitizenSerializer
+    
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['first_name', 'last_name']
 
     def perform_create(self, serializer):
         obj = serializer.save()
@@ -77,21 +71,10 @@ class CitizenViewSet(viewsets.ModelViewSet):
         instance.delete()
 
 class LicensePlateViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = License_Plate.objects.all()
     serializer_class = License_PlateSerializer
 
-    def get_queryset(self):
-        queryset = License_Plate.objects.all()
-        query = self.request.query_params.get('search', None)
-        if query:
-            queryset = queryset.filter(
-                # Search by Plate Number OR Owner Name
-                Q(plate_number__icontains=query) |
-                Q(owner__first_name__icontains=query) |
-                Q(owner__last_name__icontains=query)
-            )
-        return queryset
-    
     def perform_create(self, serializer):
         obj = serializer.save()
         audit_logger.info("write license_plate.create actor=%s id=%s", self.request.user.pk, obj.pk)
@@ -104,9 +87,15 @@ class LicensePlateViewSet(viewsets.ModelViewSet):
         audit_logger.info("write license_plate.delete actor=%s id=%s", self.request.user.pk, instance.pk)
         instance.delete()
 
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['plate_number', 'owner__first_name', 'owner__last_name']
+
 class OfficerViewSet(viewsets.ModelViewSet):
     queryset = Officer.objects.all()
     serializer_class = OfficerSerializer
+    
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['badge_number', 'citizen_id__first_name', 'citizen_id__last_name']
     
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:

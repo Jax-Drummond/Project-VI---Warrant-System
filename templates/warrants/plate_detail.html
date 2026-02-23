@@ -9,7 +9,7 @@
             <div class="card-header bg-dark text-white">
                 <h4 class="mb-0 text-center text-uppercase">Vehicle Registration</h4>
             </div>
-            
+
             <div class="card-body text-center">
                 <div class="display-4 fw-bold text-dark bg-warning border border-dark rounded p-2 mb-4 d-inline-block">
                     {{ plate_id }}
@@ -20,7 +20,7 @@
                         <label class="text-muted small text-uppercase">Vehicle</label>
                         <h3 id="vehicle-info">Loading...</h3>
                     </div>
-                    
+
                     <div class="col-12 mb-3">
                         <label class="text-muted small text-uppercase">Registered Owner</label>
                         <h4 class="text-primary">
@@ -30,7 +30,7 @@
                 </div>
 
                 <hr>
-                
+
                 <div class="d-flex justify-content-between">
                     <a href="{% url 'plate-list' %}" class="btn btn-secondary">Back to List</a>
                     <div>
@@ -46,15 +46,15 @@
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
     const plateId = "{{ plate_id }}";
-    
+
     try {
         const response = await fetch(`/api/license_plate/${plateId}/`);
         if(!response.ok) throw new Error("Plate not found");
-        
+
         const data = await response.json();
-        
+
         document.getElementById('vehicle-info').textContent = `${data.car_make} ${data.car_model}`;
-        
+
         const ownerLink = document.getElementById('owner-link');
         ownerLink.textContent = data.owner_name;
         ownerLink.href = `/citizens/${data.owner}/`; // Link to Citizen Profile

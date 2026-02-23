@@ -7,10 +7,9 @@
     <div class="col-md-8">
         <div class="card shadow mt-4">
             <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">✏️ Edit Citizen Profile</h4>
+                <h4 class="mb-0">Edit Citizen Profile</h4>
                 <span class="badge bg-dark">ID: #{{ citizen_id }}</span>
             </div>
-            
             <div class="card-body">
                 <div id="loading" class="text-center py-5">
                     <div class="spinner-border text-warning" role="status"></div>
@@ -18,7 +17,6 @@
 
                 <form id="edit-citizen-form" style="display: none;">
                     {% csrf_token %}
-                    
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label fw-bold">First Name</label>
@@ -67,7 +65,7 @@
 
                     <hr>
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-warning btn-lg">💾 Save Changes</button>
+                        <button type="submit" class="btn btn-warning btn-lg">Save Changes</button>
                         <a href="{% url 'citizen-detail' citizen_id %}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
@@ -82,14 +80,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const form = document.getElementById('edit-citizen-form');
     const loading = document.getElementById('loading');
 
-    // 1. Fetch Current Data
     try {
         const response = await fetch(`/api/citizen/${citizenId}/`);
         if (!response.ok) throw new Error("Could not load citizen data");
-        
         const data = await response.json();
-        
-        // Populate Fields
+
         document.getElementById('first_name').value = data.first_name;
         document.getElementById('last_name').value = data.last_name;
         document.getElementById('age').value = data.age;
@@ -97,7 +92,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         document.getElementById('race').value = data.race;
         document.getElementById('details').value = data.details || '';
 
-        // Show Form
         loading.style.display = 'none';
         form.style.display = 'block';
 
@@ -105,10 +99,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         loading.innerHTML = `<p class="text-danger">Error: ${err.message}</p>`;
     }
 
-    // 2. Handle Save
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const payload = {
             first_name: document.getElementById('first_name').value,
             last_name: document.getElementById('last_name').value,

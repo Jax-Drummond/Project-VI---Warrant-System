@@ -7,12 +7,12 @@
     <div class="col-md-8">
         <div class="card shadow mt-4">
             <div class="card-header bg-success text-white">
-                <h4 class="mb-0">📝 Register New Vehicle</h4>
+                <h4 class="mb-0">Register New Vehicle</h4>
             </div>
             <div class="card-body">
                 <form id="create-plate-form">
                     {% csrf_token %}
-                    
+
                     <div class="mb-3">
                         <label class="form-label fw-bold">License Plate Number</label>
                         <input type="text" id="plate_number" class="form-control text-uppercase" placeholder="e.g. ABC-123" required maxlength="8">
@@ -49,33 +49,35 @@
 <script>
 document.addEventListener('DOMContentLoaded', async () => {
     const ownerSelect = document.getElementById('owner');
-    
-    // 1. Load Citizens
+
+    // Helper to fetch all pages
+    async function fetchAllPages(url) {
+        let allResults = [];
+        let nextUrl = url;
+        while (nextUrl) {
+            const response = await fetch(nextUrl);
+            const data = await response.json();
+            allResults = allResults.concat(data.results);
+            nextUrl = data.next;
+        }
+        return allResults;
+    }
+
     try {
-        const response = await fetch('/api/citizen/');
-        const citizens = await response.json();
-        
+        const citizens = await fetchAllPages('/api/citizen/');
+
         ownerSelect.innerHTML = '<option value="">-- Select Owner --</option>';
         citizens.forEach(c => {
             ownerSelect.innerHTML += `<option value="${c.id}">${c.first_name} ${c.last_name}</option>`;
         });
-
-        // 2. Check URL for pre-selected owner (?owner=5)
-        const urlParams = new URLSearchParams(window.location.search);
-        const preSelected = urlParams.get('owner');
-        if(preSelected) {
-            ownerSelect.value = preSelected;
-            ownerSelect.style.backgroundColor = "#d1e7dd"; // Light green highlight
-        }
-
     } catch (err) {
-        alert("Error loading citizen list.");
+        console.error("Error loading owners:", err);
     }
 
     // 3. Submit Form
     document.getElementById('create-plate-form').addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         const payload = {
             plate_number: document.getElementById('plate_number').value.toUpperCase(),
             owner: parseInt(ownerSelect.value),
