@@ -1,15 +1,12 @@
+"""
+    Handles all of the frontend routes.
+"""
 # warrants/urls.py
 from django.urls import path
 from . import views  # These are your Template views
 
 urlpatterns = [
-
     path('', views.dashboard_view, name='dashboard'),
-
-    # The Officer List Page (The Empty Shell)
-    # path('officers/', views.officer_frontend_list, name='officer-list'),
-
-    # The Create Warrant Page
     path('warrants/', views.warrants_view, name='warrant-list'),
     path('warrants/create/', views.warrant_create_view, name='warrant-create'),
     path('warrants/<int:pk>/', views.warrant_detail_view, name='warrant-detail'),
