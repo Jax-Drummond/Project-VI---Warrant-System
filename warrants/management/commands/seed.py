@@ -1,3 +1,6 @@
+"""
+   Seeds the database for each model
+"""
 import random
 import string
 import os
@@ -15,7 +18,7 @@ class Command(BaseCommand):
 def run_seed(cmd_instance):
     first_names = ["James", "John", "Robert", "Michael", "William", "David", "Richard", "Joseph", "Thomas", "Charles", "Mary", "Patricia", "Jennifer", "Linda", "Elizabeth", "Barbara", "Susan", "Jessica", "Sarah", "Karen", "Lisa", "Nancy"]
     last_names = ["Smith", "Johnson", "Williams", "Brown", "Jones", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez", "Hernandez", "Lopez", "Gonzalez", "Wilson", "Anderson", "Thomas", "Taylor", "Moore", "Jackson", "Martin"]
-    
+
     car_makes = ["Ford", "Chevrolet", "Dodge", "Toyota", "Honda", "Nissan", "Tesla"]
     car_models = {
         "Ford": ["Crown Victoria", "Explorer", "F-150", "Mustang", "Taurus"],
@@ -44,9 +47,9 @@ def run_seed(cmd_instance):
 
     judges = ["Judge Judy", "Judge Dredd", "Judge Mathis", "Hon. H. Simpson", "Hon. S. Goodman"]
 
-   # Create superuser
+
     superuser_password = os.environ.get('SUPERUSER_PASSWORD', 'admin123') # Default fallback
-    
+
     admin_citizen, _ = Citizen.objects.get_or_create(
         first_name="Developer",
         last_name="Warden",
@@ -70,9 +73,6 @@ def run_seed(cmd_instance):
         superuser.set_password(superuser_password)
         superuser.save()
 
-    # ---------------------------------------------------------
-    # 3. CREATE CRIMES (PENAL CODE)
-    # ---------------------------------------------------------
     cmd_instance.stdout.write("Seeding Crimes...")
     all_crimes = []
     for code, desc in crimes_data:
@@ -82,13 +82,8 @@ def run_seed(cmd_instance):
         )
         all_crimes.append(crime)
 
-    # ---------------------------------------------------------
-    # 4. CREATE CITIZENS (At least 30 to support other models)
-    # ---------------------------------------------------------
     cmd_instance.stdout.write("Seeding Citizens...")
     all_citizens = []
-    
-    # Ensure we include the admin citizen in our pool
     all_citizens.append(admin_citizen)
 
     for _ in range(30):
@@ -102,18 +97,13 @@ def run_seed(cmd_instance):
         )
         all_citizens.append(c)
 
-    # ---------------------------------------------------------
-    # 5. CREATE OFFICERS (10 Random Citizens become Officers)
-    # ---------------------------------------------------------
     cmd_instance.stdout.write("Seeding Officers...")
-    # Shuffle citizens and pick 10 unique ones (excluding the admin we already made)
     potential_officers = [c for c in all_citizens if c.id != admin_citizen.id]
     officer_candidates = random.sample(potential_officers, 10)
 
     for i, cit in enumerate(officer_candidates):
-        # Generate badge number 100-999
         badge = str(random.randint(100, 999))
-        
+
         if not Officer.objects.filter(badge_number=badge).exists():
             o = Officer.objects.create(
                 badge_number=badge,
@@ -124,12 +114,8 @@ def run_seed(cmd_instance):
             o.set_password("password123") # Default password for testing
             o.save()
 
-    # ---------------------------------------------------------
-    # 6. CREATE LICENSE PLATES (20 Plates)
-    # ---------------------------------------------------------
     cmd_instance.stdout.write("Seeding License Plates...")
     for _ in range(20):
-        # Generate random plate: 3 Letters + 4 Numbers (e.g., ABC-1234)
         letters = ''.join(random.choices(string.ascii_uppercase, k=3))
         nums = ''.join(random.choices(string.digits, k=4))
         plate_str = f"{letters}-{nums}"
@@ -146,9 +132,6 @@ def run_seed(cmd_instance):
                 car_model=model
             )
 
-    # ---------------------------------------------------------
-    # 7. CREATE WARRANTS (20 Warrants)
-    # ---------------------------------------------------------
     cmd_instance.stdout.write("Seeding Warrants...")
     for _ in range(20):
         suspect = random.choice(all_citizens)
