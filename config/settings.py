@@ -65,6 +65,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    "warrants.middleware.ReadAuditMiddleware",
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -135,3 +136,23 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "audit": {"format": "%(asctime)s %(levelname)s %(name)s %(message)s"},
+    },
+    "handlers": {
+        "audit_file": {
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR / "logs" / "audit.log",
+            "formatter": "audit",
+            "level": "INFO",
+        },
+    },
+    "loggers": {
+        "audit": {"handlers": ["audit_file"], "level": "INFO", "propagate": False},
+    },
+}

@@ -6,6 +6,8 @@ from rest_framework import viewsets, filters
 from django.contrib.auth.decorators import login_required
 from .models import *
 from .serializer import *
+import logging
+audit_logger = logging.getLogger("audit")
 
 # Create your views here.
 class WarrantViewSet(viewsets.ModelViewSet):
@@ -13,6 +15,18 @@ class WarrantViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Warrant.objects.all()
 
+    def perform_create(self, serializer):
+        obj = serializer.save()
+        audit_logger.info("write warrant.create actor=%s id=%s", self.request.user.pk, obj.pk)
+
+    def perform_update(self, serializer):
+        obj = serializer.save()
+        audit_logger.info("write warrant.update actor=%s id=%s", self.request.user.pk, obj.pk)
+
+    def perform_destroy(self, instance):
+        audit_logger.info("write warrant.delete actor=%s id=%s", self.request.user.pk, instance.pk)
+        instance.delete()
+        
     filter_backends = [filters.SearchFilter]
     search_fields = ['citizen_involved__first_name', 'citizen_involved__last_name', 'citizen_involved__plates__plate_number', 'crime_number__description']
 
@@ -21,6 +35,18 @@ class CrimeViewSet(viewsets.ModelViewSet):
     queryset = Crime.objects.all()
     serializer_class = CrimeSerializer
 
+    def perform_create(self, serializer):
+        obj = serializer.save()
+        audit_logger.info("write crime.create actor=%s id=%s", self.request.user.pk, obj.pk)
+
+    def perform_update(self, serializer):
+        obj = serializer.save()
+        audit_logger.info("write crime.update actor=%s id=%s", self.request.user.pk, obj.pk)
+
+    def perform_destroy(self, instance):
+        audit_logger.info("write crime.delete actor=%s id=%s", self.request.user.pk, instance.pk)
+        instance.delete()
+        
     filter_backends = [filters.SearchFilter]
     search_fields = ['section_number', 'description']
 
@@ -32,10 +58,34 @@ class CitizenViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['first_name', 'last_name']
 
+    def perform_create(self, serializer):
+        obj = serializer.save()
+        audit_logger.info("write citizen.create actor=%s id=%s", self.request.user.pk, obj.pk)
+
+    def perform_update(self, serializer):
+        obj = serializer.save()
+        audit_logger.info("write citizen.update actor=%s id=%s", self.request.user.pk, obj.pk)
+
+    def perform_destroy(self, instance):
+        audit_logger.info("write citizen.delete actor=%s id=%s", self.request.user.pk, instance.pk)
+        instance.delete()
+
 class LicensePlateViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = License_Plate.objects.all()
     serializer_class = License_PlateSerializer
+
+    def perform_create(self, serializer):
+        obj = serializer.save()
+        audit_logger.info("write license_plate.create actor=%s id=%s", self.request.user.pk, obj.pk)
+
+    def perform_update(self, serializer):
+        obj = serializer.save()
+        audit_logger.info("write license_plate.update actor=%s id=%s", self.request.user.pk, obj.pk)
+
+    def perform_destroy(self, instance):
+        audit_logger.info("write license_plate.delete actor=%s id=%s", self.request.user.pk, instance.pk)
+        instance.delete()
 
     filter_backends = [filters.SearchFilter]
     search_fields = ['plate_number', 'owner__first_name', 'owner__last_name']
@@ -53,6 +103,8 @@ class OfficerViewSet(viewsets.ModelViewSet):
         else:
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
+
+
 
 ## Frontend Views
 @login_required
