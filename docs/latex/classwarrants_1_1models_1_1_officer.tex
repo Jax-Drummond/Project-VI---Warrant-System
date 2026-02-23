@@ -1,0 +1,93 @@
+\doxysection{warrants.\+models.\+Officer Class Reference}
+\hypertarget{classwarrants_1_1models_1_1_officer}{}\label{classwarrants_1_1models_1_1_officer}\index{warrants.models.Officer@{warrants.models.Officer}}
+Inheritance diagram for warrants.\+models.\+Officer:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classwarrants_1_1models_1_1_officer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_officer_a9dfcc73e10f88058c8b1a36e55c0ee79}{\+\_\+\+\_\+str\+\_\+\+\_\+}} (self)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_officer_a14df77b4a0bb1947f81804f621cdbbca}{badge\+\_\+number}} = models.\+Char\+Field(max\+\_\+length=5, blank=False, primary\+\_\+key=True)
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_officer_aa0a3e156af9d515a810943fe2b4a265d}{citizen\+\_\+id}} = models.\+Foreign\+Key(\doxymbox{\hyperlink{classwarrants_1_1models_1_1_citizen}{Citizen}}, on\+\_\+delete=models.\+CASCADE)
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_officer_a18a5532c7b0775c013b9cef17d2094cf}{is\+\_\+staff}} = models.\+Boolean\+Field(default=False)
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_officer_a91181a8f1101924f06ee7c9674132c7c}{is\+\_\+active}} = models.\+Boolean\+Field(default=True)
+\item 
+str \doxymbox{\hyperlink{classwarrants_1_1models_1_1_officer_a4ae935a434b140f1e3dc8690736bf368}{USERNAME\+\_\+\+FIELD}} = \textquotesingle{}\doxymbox{\hyperlink{classwarrants_1_1models_1_1_officer_a14df77b4a0bb1947f81804f621cdbbca}{badge\+\_\+number}}\textquotesingle{}
+\item 
+list \doxymbox{\hyperlink{classwarrants_1_1models_1_1_officer_a48d38f715e999d98cb2af921f9f2ca89}{REQUIRED\+\_\+\+FIELDS}} = \+[\textquotesingle{}\doxymbox{\hyperlink{classwarrants_1_1models_1_1_officer_aa0a3e156af9d515a810943fe2b4a265d}{citizen\+\_\+id}}\textquotesingle{}]\+
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_officer_afa780f9b6c25e8721a12a8747e00ebae}{objects}} = \doxymbox{\hyperlink{classwarrants_1_1managers_1_1_my_user_manager}{My\+User\+Manager}}()
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{classwarrants_1_1models_1_1_officer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classwarrants_1_1models_1_1_officer_a9dfcc73e10f88058c8b1a36e55c0ee79}\index{warrants.models.Officer@{warrants.models.Officer}!\_\_str\_\_@{\_\_str\_\_}}
+\index{\_\_str\_\_@{\_\_str\_\_}!warrants.models.Officer@{warrants.models.Officer}}
+\doxysubsubsection{\texorpdfstring{\_\_str\_\_()}{\_\_str\_\_()}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_officer_a9dfcc73e10f88058c8b1a36e55c0ee79} 
+warrants.\+models.\+Officer.\+\_\+\+\_\+str\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classwarrants_1_1models_1_1_officer_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classwarrants_1_1models_1_1_officer_a14df77b4a0bb1947f81804f621cdbbca}\index{warrants.models.Officer@{warrants.models.Officer}!badge\_number@{badge\_number}}
+\index{badge\_number@{badge\_number}!warrants.models.Officer@{warrants.models.Officer}}
+\doxysubsubsection{\texorpdfstring{badge\_number}{badge\_number}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_officer_a14df77b4a0bb1947f81804f621cdbbca} 
+warrants.\+models.\+Officer.\+badge\+\_\+number = models.\+Char\+Field(max\+\_\+length=5, blank=False, primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1models_1_1_officer_aa0a3e156af9d515a810943fe2b4a265d}\index{warrants.models.Officer@{warrants.models.Officer}!citizen\_id@{citizen\_id}}
+\index{citizen\_id@{citizen\_id}!warrants.models.Officer@{warrants.models.Officer}}
+\doxysubsubsection{\texorpdfstring{citizen\_id}{citizen\_id}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_officer_aa0a3e156af9d515a810943fe2b4a265d} 
+warrants.\+models.\+Officer.\+citizen\+\_\+id = models.\+Foreign\+Key(\doxymbox{\hyperlink{classwarrants_1_1models_1_1_citizen}{Citizen}}, on\+\_\+delete=models.\+CASCADE)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1models_1_1_officer_a91181a8f1101924f06ee7c9674132c7c}\index{warrants.models.Officer@{warrants.models.Officer}!is\_active@{is\_active}}
+\index{is\_active@{is\_active}!warrants.models.Officer@{warrants.models.Officer}}
+\doxysubsubsection{\texorpdfstring{is\_active}{is\_active}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_officer_a91181a8f1101924f06ee7c9674132c7c} 
+warrants.\+models.\+Officer.\+is\+\_\+active = models.\+Boolean\+Field(default=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1models_1_1_officer_a18a5532c7b0775c013b9cef17d2094cf}\index{warrants.models.Officer@{warrants.models.Officer}!is\_staff@{is\_staff}}
+\index{is\_staff@{is\_staff}!warrants.models.Officer@{warrants.models.Officer}}
+\doxysubsubsection{\texorpdfstring{is\_staff}{is\_staff}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_officer_a18a5532c7b0775c013b9cef17d2094cf} 
+warrants.\+models.\+Officer.\+is\+\_\+staff = models.\+Boolean\+Field(default=False)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1models_1_1_officer_afa780f9b6c25e8721a12a8747e00ebae}\index{warrants.models.Officer@{warrants.models.Officer}!objects@{objects}}
+\index{objects@{objects}!warrants.models.Officer@{warrants.models.Officer}}
+\doxysubsubsection{\texorpdfstring{objects}{objects}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_officer_afa780f9b6c25e8721a12a8747e00ebae} 
+warrants.\+models.\+Officer.\+objects = \doxymbox{\hyperlink{classwarrants_1_1managers_1_1_my_user_manager}{My\+User\+Manager}}()\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1models_1_1_officer_a48d38f715e999d98cb2af921f9f2ca89}\index{warrants.models.Officer@{warrants.models.Officer}!REQUIRED\_FIELDS@{REQUIRED\_FIELDS}}
+\index{REQUIRED\_FIELDS@{REQUIRED\_FIELDS}!warrants.models.Officer@{warrants.models.Officer}}
+\doxysubsubsection{\texorpdfstring{REQUIRED\_FIELDS}{REQUIRED\_FIELDS}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_officer_a48d38f715e999d98cb2af921f9f2ca89} 
+list warrants.\+models.\+Officer.\+REQUIRED\+\_\+\+FIELDS = \+[\textquotesingle{}\doxymbox{\hyperlink{classwarrants_1_1models_1_1_officer_aa0a3e156af9d515a810943fe2b4a265d}{citizen\+\_\+id}}\textquotesingle{}]\+\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1models_1_1_officer_a4ae935a434b140f1e3dc8690736bf368}\index{warrants.models.Officer@{warrants.models.Officer}!USERNAME\_FIELD@{USERNAME\_FIELD}}
+\index{USERNAME\_FIELD@{USERNAME\_FIELD}!warrants.models.Officer@{warrants.models.Officer}}
+\doxysubsubsection{\texorpdfstring{USERNAME\_FIELD}{USERNAME\_FIELD}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_officer_a4ae935a434b140f1e3dc8690736bf368} 
+str warrants.\+models.\+Officer.\+USERNAME\+\_\+\+FIELD = \textquotesingle{}\doxymbox{\hyperlink{classwarrants_1_1models_1_1_officer_a14df77b4a0bb1947f81804f621cdbbca}{badge\+\_\+number}}\textquotesingle{}\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+warrants/\+\doxymbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}

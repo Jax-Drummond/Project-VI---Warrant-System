@@ -1,0 +1,44 @@
+\doxysection{warrants.\+page\+\_\+urls Namespace Reference}
+\hypertarget{namespacewarrants_1_1page__urls}{}\label{namespacewarrants_1_1page__urls}\index{warrants.page\_urls@{warrants.page\_urls}}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+list \doxymbox{\hyperlink{namespacewarrants_1_1page__urls_a43476a0c89295c29f6107a02fe49661c}{urlpatterns}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}    Handles all of the frontend routes.
+\end{DoxyVerb}
+ 
+
+\label{doc-var-members}
+\Hypertarget{namespacewarrants_1_1page__urls_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespacewarrants_1_1page__urls_a43476a0c89295c29f6107a02fe49661c}\index{warrants.page\_urls@{warrants.page\_urls}!urlpatterns@{urlpatterns}}
+\index{urlpatterns@{urlpatterns}!warrants.page\_urls@{warrants.page\_urls}}
+\doxysubsubsection{\texorpdfstring{urlpatterns}{urlpatterns}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1page__urls_a43476a0c89295c29f6107a02fe49661c} 
+list warrants.\+page\+\_\+urls.\+urlpatterns}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ =\ \ [}
+\DoxyCodeLine{00002\ \ \ \ \ path(\textcolor{stringliteral}{''},\ views.dashboard\_view,\ name=\textcolor{stringliteral}{'dashboard'}),}
+\DoxyCodeLine{00003\ \ \ \ \ path(\textcolor{stringliteral}{'warrants/'},\ views.warrants\_view,\ name=\textcolor{stringliteral}{'warrant-\/list'}),}
+\DoxyCodeLine{00004\ \ \ \ \ path(\textcolor{stringliteral}{'warrants/create/'},\ views.warrant\_create\_view,\ name=\textcolor{stringliteral}{'warrant-\/create'}),}
+\DoxyCodeLine{00005\ \ \ \ \ path(\textcolor{stringliteral}{'warrants/<int:pk>/'},\ views.warrant\_detail\_view,\ name=\textcolor{stringliteral}{'warrant-\/detail'}),}
+\DoxyCodeLine{00006\ \ \ \ \ path(\textcolor{stringliteral}{'warrants/<int:pk>/edit/'},\ views.warrant\_edit\_view,\ name=\textcolor{stringliteral}{'warrant-\/edit'}),}
+\DoxyCodeLine{00007\ \ \ \ \ path(\textcolor{stringliteral}{'officers/'},\ views.officer\_list\_view,\ name=\textcolor{stringliteral}{'officer-\/list'}),}
+\DoxyCodeLine{00008\ \ \ \ \ path(\textcolor{stringliteral}{'crimes/'},\ views.crime\_list\_view,\ name=\textcolor{stringliteral}{'crime-\/list'}),}
+\DoxyCodeLine{00009\ \ \ \ \ path(\textcolor{stringliteral}{'citizens/'},\ views.citizen\_list\_view,\ name=\textcolor{stringliteral}{'citizen-\/list'}),}
+\DoxyCodeLine{00010\ \ \ \ \ path(\textcolor{stringliteral}{'citizens/create/'},\ views.citizen\_create\_view,\ name=\textcolor{stringliteral}{'citizen-\/create'}),}
+\DoxyCodeLine{00011\ \ \ \ \ path(\textcolor{stringliteral}{'citizens/<int:pk>/'},\ views.citizen\_detail\_view,\ name=\textcolor{stringliteral}{'citizen-\/detail'}),}
+\DoxyCodeLine{00012\ \ \ \ \ path(\textcolor{stringliteral}{'citizens/<int:pk>/edit/'},\ views.citizen\_edit\_view,\ name=\textcolor{stringliteral}{'citizen-\/edit'}),}
+\DoxyCodeLine{00013\ \ \ \ \ path(\textcolor{stringliteral}{'plates/'},\ views.plate\_list\_view,\ name=\textcolor{stringliteral}{'plate-\/list'}),}
+\DoxyCodeLine{00014\ \ \ \ \ path(\textcolor{stringliteral}{'plates/create/'},\ views.plate\_create\_view,\ name=\textcolor{stringliteral}{'plate-\/create'}),}
+\DoxyCodeLine{00015\ \ \ \ \ path(\textcolor{stringliteral}{'plates/<str:pk>/'},\ views.plate\_detail\_view,\ name=\textcolor{stringliteral}{'plate-\/detail'}),}
+\DoxyCodeLine{00016\ \ \ \ \ path(\textcolor{stringliteral}{'plates/<str:pk>/edit/'},\ views.plate\_edit\_view,\ name=\textcolor{stringliteral}{'plate-\/edit'}),}
+\DoxyCodeLine{00017\ ]}
+
+\end{DoxyCode}

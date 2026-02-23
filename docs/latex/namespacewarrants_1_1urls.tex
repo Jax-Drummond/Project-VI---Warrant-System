@@ -1,0 +1,59 @@
+\doxysection{warrants.\+urls Namespace Reference}
+\hypertarget{namespacewarrants_1_1urls}{}\label{namespacewarrants_1_1urls}\index{warrants.urls@{warrants.urls}}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1urls_a3016686e056b8cbeb74ad08c4ed02890}{router}} = routers.\+Default\+Router()
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1urls_a9a971e6e0227506e4a6c7beee63c670b}{Warrant\+View\+Set}}
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1urls_aad45a08f7c343189672b8fe28be4ca7b}{basename}}
+\item 
+list \doxymbox{\hyperlink{namespacewarrants_1_1urls_abf709f84ea4bbd0969362044185e424f}{urlpatterns}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Handles the routes for the api
+    e.g. /api/crime
+\end{DoxyVerb}
+ 
+
+\label{doc-var-members}
+\Hypertarget{namespacewarrants_1_1urls_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespacewarrants_1_1urls_aad45a08f7c343189672b8fe28be4ca7b}\index{warrants.urls@{warrants.urls}!basename@{basename}}
+\index{basename@{basename}!warrants.urls@{warrants.urls}}
+\doxysubsubsection{\texorpdfstring{basename}{basename}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1urls_aad45a08f7c343189672b8fe28be4ca7b} 
+warrants.\+urls.\+basename}
+
+\Hypertarget{namespacewarrants_1_1urls_a3016686e056b8cbeb74ad08c4ed02890}\index{warrants.urls@{warrants.urls}!router@{router}}
+\index{router@{router}!warrants.urls@{warrants.urls}}
+\doxysubsubsection{\texorpdfstring{router}{router}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1urls_a3016686e056b8cbeb74ad08c4ed02890} 
+warrants.\+urls.\+router = routers.\+Default\+Router()}
+
+\Hypertarget{namespacewarrants_1_1urls_abf709f84ea4bbd0969362044185e424f}\index{warrants.urls@{warrants.urls}!urlpatterns@{urlpatterns}}
+\index{urlpatterns@{urlpatterns}!warrants.urls@{warrants.urls}}
+\doxysubsubsection{\texorpdfstring{urlpatterns}{urlpatterns}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1urls_abf709f84ea4bbd0969362044185e424f} 
+list warrants.\+urls.\+urlpatterns}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ =\ \ [}
+\DoxyCodeLine{00002\ \ \ \ \ path(\textcolor{stringliteral}{''},\ include(router.urls)),}
+\DoxyCodeLine{00003\ \ \ \ \ path(\textcolor{stringliteral}{'auth/'},\ include(\textcolor{stringliteral}{'rest\_framework.urls'},\ namespace=\textcolor{stringliteral}{'rest\_framework'})),}
+\DoxyCodeLine{00004\ \ \ \ \ path(\textcolor{stringliteral}{'schema/'},\ SpectacularAPIView.as\_view(),\ name=\textcolor{stringliteral}{'schema'}),}
+\DoxyCodeLine{00005\ \ \ \ \ path(\textcolor{stringliteral}{'schema/swagger-\/ui/'},\ SpectacularSwaggerView.as\_view(url\_name=\textcolor{stringliteral}{'schema'}),\ name=\textcolor{stringliteral}{'swagger-\/ui'}),}
+\DoxyCodeLine{00006\ \ \ \ \ path(\textcolor{stringliteral}{'schema/redoc/'},\ SpectacularRedocView.as\_view(url\_name=\textcolor{stringliteral}{'schema'}),\ name=\textcolor{stringliteral}{'redoc'}),}
+\DoxyCodeLine{00007\ ]}
+
+\end{DoxyCode}
+\Hypertarget{namespacewarrants_1_1urls_a9a971e6e0227506e4a6c7beee63c670b}\index{warrants.urls@{warrants.urls}!WarrantViewSet@{WarrantViewSet}}
+\index{WarrantViewSet@{WarrantViewSet}!warrants.urls@{warrants.urls}}
+\doxysubsubsection{\texorpdfstring{WarrantViewSet}{WarrantViewSet}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1urls_a9a971e6e0227506e4a6c7beee63c670b} 
+warrants.\+urls.\+Warrant\+View\+Set}
+

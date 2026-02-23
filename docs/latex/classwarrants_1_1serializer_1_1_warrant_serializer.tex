@@ -1,0 +1,103 @@
+\doxysection{warrants.\+serializer.\+Warrant\+Serializer Class Reference}
+\hypertarget{classwarrants_1_1serializer_1_1_warrant_serializer}{}\label{classwarrants_1_1serializer_1_1_warrant_serializer}\index{warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}}
+Inheritance diagram for warrants.\+serializer.\+Warrant\+Serializer:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classwarrants_1_1serializer_1_1_warrant_serializer}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{classwarrants_1_1serializer_1_1_warrant_serializer_1_1_meta}{Meta}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1serializer_1_1_warrant_serializer_a8c2c6a2846e5d022c996a25f15ba1daa}{get\+\_\+citizen\+\_\+name}} (self, obj)
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1serializer_1_1_warrant_serializer_ac93799b6398d0543971be9951568fcb7}{get\+\_\+linked\+\_\+plates}} (self, obj)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1serializer_1_1_warrant_serializer_a9441fb1dfe716565241e18a1891eb75b}{citizen\+\_\+involved}} = serializers.\+Primary\+Key\+Related\+Field(queryset=Citizen.\+objects.\+all())
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1serializer_1_1_warrant_serializer_a794f62499a31a959fcbfdcef16308243}{crime\+\_\+number}} = serializers.\+Primary\+Key\+Related\+Field(queryset=Crime.\+objects.\+all())
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1serializer_1_1_warrant_serializer_ad1474ce6a46d082ff1411d28f140b321}{citizen\+\_\+name}} = serializers.\+Serializer\+Method\+Field()
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1serializer_1_1_warrant_serializer_ab03434e9f24d2fba80f6be3b3f7aac61}{linked\+\_\+plates}} = serializers.\+Serializer\+Method\+Field()
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1serializer_1_1_warrant_serializer_a5dace42bb93065ebd7846611ad1d61d5}{crime\+\_\+description}} = serializers.\+Char\+Field(source=\textquotesingle{}crime\+\_\+number.\+description\textquotesingle{}, read\+\_\+only=True)
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1serializer_1_1_warrant_serializer_a1aad6bfff50be029e6555dba6a223b18}{status\+\_\+label}} = serializers.\+Char\+Field(source=\textquotesingle{}get\+\_\+status\+\_\+display\textquotesingle{}, read\+\_\+only=True)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}    Converts the Warrant Model and Queryset into a native python datatype.
+\end{DoxyVerb}
+ 
+
+\label{doc-func-members}
+\Hypertarget{classwarrants_1_1serializer_1_1_warrant_serializer_doc-func-members}
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classwarrants_1_1serializer_1_1_warrant_serializer_a8c2c6a2846e5d022c996a25f15ba1daa}\index{warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}!get\_citizen\_name@{get\_citizen\_name}}
+\index{get\_citizen\_name@{get\_citizen\_name}!warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}}
+\doxysubsubsection{\texorpdfstring{get\_citizen\_name()}{get\_citizen\_name()}}
+{\footnotesize\ttfamily \label{classwarrants_1_1serializer_1_1_warrant_serializer_a8c2c6a2846e5d022c996a25f15ba1daa} 
+warrants.\+serializer.\+Warrant\+Serializer.\+get\+\_\+citizen\+\_\+name (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{obj}{}\end{DoxyParamCaption})}
+
+\Hypertarget{classwarrants_1_1serializer_1_1_warrant_serializer_ac93799b6398d0543971be9951568fcb7}\index{warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}!get\_linked\_plates@{get\_linked\_plates}}
+\index{get\_linked\_plates@{get\_linked\_plates}!warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}}
+\doxysubsubsection{\texorpdfstring{get\_linked\_plates()}{get\_linked\_plates()}}
+{\footnotesize\ttfamily \label{classwarrants_1_1serializer_1_1_warrant_serializer_ac93799b6398d0543971be9951568fcb7} 
+warrants.\+serializer.\+Warrant\+Serializer.\+get\+\_\+linked\+\_\+plates (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{obj}{}\end{DoxyParamCaption})}
+
+
+
+\label{doc-variable-members}
+\Hypertarget{classwarrants_1_1serializer_1_1_warrant_serializer_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classwarrants_1_1serializer_1_1_warrant_serializer_a9441fb1dfe716565241e18a1891eb75b}\index{warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}!citizen\_involved@{citizen\_involved}}
+\index{citizen\_involved@{citizen\_involved}!warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}}
+\doxysubsubsection{\texorpdfstring{citizen\_involved}{citizen\_involved}}
+{\footnotesize\ttfamily \label{classwarrants_1_1serializer_1_1_warrant_serializer_a9441fb1dfe716565241e18a1891eb75b} 
+warrants.\+serializer.\+Warrant\+Serializer.\+citizen\+\_\+involved = serializers.\+Primary\+Key\+Related\+Field(queryset=Citizen.\+objects.\+all())\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1serializer_1_1_warrant_serializer_ad1474ce6a46d082ff1411d28f140b321}\index{warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}!citizen\_name@{citizen\_name}}
+\index{citizen\_name@{citizen\_name}!warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}}
+\doxysubsubsection{\texorpdfstring{citizen\_name}{citizen\_name}}
+{\footnotesize\ttfamily \label{classwarrants_1_1serializer_1_1_warrant_serializer_ad1474ce6a46d082ff1411d28f140b321} 
+warrants.\+serializer.\+Warrant\+Serializer.\+citizen\+\_\+name = serializers.\+Serializer\+Method\+Field()\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1serializer_1_1_warrant_serializer_a5dace42bb93065ebd7846611ad1d61d5}\index{warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}!crime\_description@{crime\_description}}
+\index{crime\_description@{crime\_description}!warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}}
+\doxysubsubsection{\texorpdfstring{crime\_description}{crime\_description}}
+{\footnotesize\ttfamily \label{classwarrants_1_1serializer_1_1_warrant_serializer_a5dace42bb93065ebd7846611ad1d61d5} 
+warrants.\+serializer.\+Warrant\+Serializer.\+crime\+\_\+description = serializers.\+Char\+Field(source=\textquotesingle{}crime\+\_\+number.\+description\textquotesingle{}, read\+\_\+only=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1serializer_1_1_warrant_serializer_a794f62499a31a959fcbfdcef16308243}\index{warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}!crime\_number@{crime\_number}}
+\index{crime\_number@{crime\_number}!warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}}
+\doxysubsubsection{\texorpdfstring{crime\_number}{crime\_number}}
+{\footnotesize\ttfamily \label{classwarrants_1_1serializer_1_1_warrant_serializer_a794f62499a31a959fcbfdcef16308243} 
+warrants.\+serializer.\+Warrant\+Serializer.\+crime\+\_\+number = serializers.\+Primary\+Key\+Related\+Field(queryset=Crime.\+objects.\+all())\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1serializer_1_1_warrant_serializer_ab03434e9f24d2fba80f6be3b3f7aac61}\index{warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}!linked\_plates@{linked\_plates}}
+\index{linked\_plates@{linked\_plates}!warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}}
+\doxysubsubsection{\texorpdfstring{linked\_plates}{linked\_plates}}
+{\footnotesize\ttfamily \label{classwarrants_1_1serializer_1_1_warrant_serializer_ab03434e9f24d2fba80f6be3b3f7aac61} 
+warrants.\+serializer.\+Warrant\+Serializer.\+linked\+\_\+plates = serializers.\+Serializer\+Method\+Field()\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1serializer_1_1_warrant_serializer_a1aad6bfff50be029e6555dba6a223b18}\index{warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}!status\_label@{status\_label}}
+\index{status\_label@{status\_label}!warrants.serializer.WarrantSerializer@{warrants.serializer.WarrantSerializer}}
+\doxysubsubsection{\texorpdfstring{status\_label}{status\_label}}
+{\footnotesize\ttfamily \label{classwarrants_1_1serializer_1_1_warrant_serializer_a1aad6bfff50be029e6555dba6a223b18} 
+warrants.\+serializer.\+Warrant\+Serializer.\+status\+\_\+label = serializers.\+Char\+Field(source=\textquotesingle{}get\+\_\+status\+\_\+display\textquotesingle{}, read\+\_\+only=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+warrants/\+\doxymbox{\hyperlink{serializer_8py}{serializer.\+py}}\end{DoxyCompactItemize}

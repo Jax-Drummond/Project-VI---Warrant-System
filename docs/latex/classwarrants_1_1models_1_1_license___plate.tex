@@ -1,0 +1,53 @@
+\doxysection{warrants.\+models.\+License\+\_\+\+Plate Class Reference}
+\hypertarget{classwarrants_1_1models_1_1_license___plate}{}\label{classwarrants_1_1models_1_1_license___plate}\index{warrants.models.License\_Plate@{warrants.models.License\_Plate}}
+Inheritance diagram for warrants.\+models.\+License\+\_\+\+Plate:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classwarrants_1_1models_1_1_license___plate}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_license___plate_a1f6b4ba797fc975651d5397cd9358665}{plate\+\_\+number}} = models.\+Char\+Field(max\+\_\+length=8, primary\+\_\+key=True)
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_license___plate_ad47655d99763ea9343cb6dc192afa6e7}{owner}} = models.\+Foreign\+Key(\doxymbox{\hyperlink{classwarrants_1_1models_1_1_citizen}{Citizen}}, on\+\_\+delete=models.\+CASCADE, related\+\_\+name=\textquotesingle{}plates\textquotesingle{})
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_license___plate_ad1799466789d730c10080077a163ad78}{car\+\_\+model}} = models.\+Char\+Field(max\+\_\+length=30)
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_license___plate_a9df6105a0cef380591b2206eb988a0de}{car\+\_\+make}} = models.\+Char\+Field(max\+\_\+length=30)
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{classwarrants_1_1models_1_1_license___plate_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classwarrants_1_1models_1_1_license___plate_a9df6105a0cef380591b2206eb988a0de}\index{warrants.models.License\_Plate@{warrants.models.License\_Plate}!car\_make@{car\_make}}
+\index{car\_make@{car\_make}!warrants.models.License\_Plate@{warrants.models.License\_Plate}}
+\doxysubsubsection{\texorpdfstring{car\_make}{car\_make}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_license___plate_a9df6105a0cef380591b2206eb988a0de} 
+warrants.\+models.\+License\+\_\+\+Plate.\+car\+\_\+make = models.\+Char\+Field(max\+\_\+length=30)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1models_1_1_license___plate_ad1799466789d730c10080077a163ad78}\index{warrants.models.License\_Plate@{warrants.models.License\_Plate}!car\_model@{car\_model}}
+\index{car\_model@{car\_model}!warrants.models.License\_Plate@{warrants.models.License\_Plate}}
+\doxysubsubsection{\texorpdfstring{car\_model}{car\_model}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_license___plate_ad1799466789d730c10080077a163ad78} 
+warrants.\+models.\+License\+\_\+\+Plate.\+car\+\_\+model = models.\+Char\+Field(max\+\_\+length=30)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1models_1_1_license___plate_ad47655d99763ea9343cb6dc192afa6e7}\index{warrants.models.License\_Plate@{warrants.models.License\_Plate}!owner@{owner}}
+\index{owner@{owner}!warrants.models.License\_Plate@{warrants.models.License\_Plate}}
+\doxysubsubsection{\texorpdfstring{owner}{owner}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_license___plate_ad47655d99763ea9343cb6dc192afa6e7} 
+warrants.\+models.\+License\+\_\+\+Plate.\+owner = models.\+Foreign\+Key(\doxymbox{\hyperlink{classwarrants_1_1models_1_1_citizen}{Citizen}}, on\+\_\+delete=models.\+CASCADE, related\+\_\+name=\textquotesingle{}plates\textquotesingle{})\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1models_1_1_license___plate_a1f6b4ba797fc975651d5397cd9358665}\index{warrants.models.License\_Plate@{warrants.models.License\_Plate}!plate\_number@{plate\_number}}
+\index{plate\_number@{plate\_number}!warrants.models.License\_Plate@{warrants.models.License\_Plate}}
+\doxysubsubsection{\texorpdfstring{plate\_number}{plate\_number}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_license___plate_a1f6b4ba797fc975651d5397cd9358665} 
+warrants.\+models.\+License\+\_\+\+Plate.\+plate\+\_\+number = models.\+Char\+Field(max\+\_\+length=8, primary\+\_\+key=True)\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+warrants/\+\doxymbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}

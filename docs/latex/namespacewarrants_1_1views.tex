@@ -1,0 +1,289 @@
+\doxysection{warrants.\+views Namespace Reference}
+\hypertarget{namespacewarrants_1_1views}{}\label{namespacewarrants_1_1views}\index{warrants.views@{warrants.views}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{classwarrants_1_1views_1_1_warrant_view_set}{Warrant\+View\+Set}}
+\item 
+class \doxymbox{\hyperlink{classwarrants_1_1views_1_1_crime_view_set}{Crime\+View\+Set}}
+\item 
+class \doxymbox{\hyperlink{classwarrants_1_1views_1_1_citizen_view_set}{Citizen\+View\+Set}}
+\item 
+class \doxymbox{\hyperlink{classwarrants_1_1views_1_1_license_plate_view_set}{License\+Plate\+View\+Set}}
+\item 
+class \doxymbox{\hyperlink{classwarrants_1_1views_1_1_officer_view_set}{Officer\+View\+Set}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1views_a781832cc7712db79d87ff764f0ebc316}{dashboard\+\_\+view}} (request)
+\begin{DoxyCompactList}\small\item\em Frontend Views. \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1views_abdc5d75c7f711890cd2e60df62d1ed16}{warrants\+\_\+view}} (request)
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1views_a377ace7c8685cb68f6089ef8f5a5874f}{warrant\+\_\+create\+\_\+view}} (request)
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1views_aa84d6ff1305c0533d495fdd0a2f07223}{warrant\+\_\+detail\+\_\+view}} (request, pk)
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1views_a7d215c5ca3cb9808fafe1c2ca3e0f936}{warrant\+\_\+edit\+\_\+view}} (request, pk)
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1views_a98e21a21233f5dc3b51fe63966645a11}{officer\+\_\+list\+\_\+view}} (request)
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1views_a3943c33addc780dcde41ac92f86d6eec}{crime\+\_\+list\+\_\+view}} (request)
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1views_ab0c8bb97404e370b271bd889d50fadf9}{citizen\+\_\+list\+\_\+view}} (request)
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1views_ad74161cf9fa1049af17040ac72dd10a3}{citizen\+\_\+create\+\_\+view}} (request)
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1views_a91eed29bb4efffe8a0ef7ba0800c64fe}{citizen\+\_\+detail\+\_\+view}} (request, pk)
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1views_a93e50eef4213147ee90e84ac5e546877}{citizen\+\_\+edit\+\_\+view}} (request, pk)
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1views_a813772d12534bec9af21ee0a018a84b4}{plate\+\_\+list\+\_\+view}} (request)
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1views_ab7140f3da7635570d263d236b48c1a27}{plate\+\_\+create\+\_\+view}} (request)
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1views_acca5c4f5ce65fe0907bb4fbdb9bb18f5}{plate\+\_\+detail\+\_\+view}} (request, pk)
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1views_a8dfc73bf5c12b95443d49097c7dde06c}{plate\+\_\+edit\+\_\+view}} (request, pk)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{namespacewarrants_1_1views_a87743856a5dc4b576382f3e5438ae19a}{audit\+\_\+logger}} = logging.\+get\+Logger("{}audit"{})
+\end{DoxyCompactItemize}
+
+
+\label{doc-func-members}
+\Hypertarget{namespacewarrants_1_1views_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacewarrants_1_1views_ad74161cf9fa1049af17040ac72dd10a3}\index{warrants.views@{warrants.views}!citizen\_create\_view@{citizen\_create\_view}}
+\index{citizen\_create\_view@{citizen\_create\_view}!warrants.views@{warrants.views}}
+\doxysubsubsection{\texorpdfstring{citizen\_create\_view()}{citizen\_create\_view()}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1views_ad74161cf9fa1049af17040ac72dd10a3} 
+warrants.\+views.\+citizen\+\_\+create\+\_\+view (\begin{DoxyParamCaption}\item[{}]{request}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Handles the frontend page requests for citizen create page
+
+Args:
+    request (HTTPRequest): The clients request
+
+Returns:
+    HTTPResponse: Renders the page.
+\end{DoxyVerb}
+ \Hypertarget{namespacewarrants_1_1views_a91eed29bb4efffe8a0ef7ba0800c64fe}\index{warrants.views@{warrants.views}!citizen\_detail\_view@{citizen\_detail\_view}}
+\index{citizen\_detail\_view@{citizen\_detail\_view}!warrants.views@{warrants.views}}
+\doxysubsubsection{\texorpdfstring{citizen\_detail\_view()}{citizen\_detail\_view()}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1views_a91eed29bb4efffe8a0ef7ba0800c64fe} 
+warrants.\+views.\+citizen\+\_\+detail\+\_\+view (\begin{DoxyParamCaption}\item[{}]{request}{, }\item[{}]{pk}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Handles the frontend page requests for citizen detail page
+
+Args:
+    request (HTTPRequest): The clients request
+    pk (int): The id of the citizen record
+
+Returns:
+    HTTPResponse: Renders the page.
+\end{DoxyVerb}
+ \Hypertarget{namespacewarrants_1_1views_a93e50eef4213147ee90e84ac5e546877}\index{warrants.views@{warrants.views}!citizen\_edit\_view@{citizen\_edit\_view}}
+\index{citizen\_edit\_view@{citizen\_edit\_view}!warrants.views@{warrants.views}}
+\doxysubsubsection{\texorpdfstring{citizen\_edit\_view()}{citizen\_edit\_view()}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1views_a93e50eef4213147ee90e84ac5e546877} 
+warrants.\+views.\+citizen\+\_\+edit\+\_\+view (\begin{DoxyParamCaption}\item[{}]{request}{, }\item[{}]{pk}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Handles the frontend page requests for citizen edit page
+
+Args:
+    request (HTTPRequest): The clients request
+    pk (int): The id of the citizen record
+
+Returns:
+    HTTPResponse: Renders the page.
+\end{DoxyVerb}
+ \Hypertarget{namespacewarrants_1_1views_ab0c8bb97404e370b271bd889d50fadf9}\index{warrants.views@{warrants.views}!citizen\_list\_view@{citizen\_list\_view}}
+\index{citizen\_list\_view@{citizen\_list\_view}!warrants.views@{warrants.views}}
+\doxysubsubsection{\texorpdfstring{citizen\_list\_view()}{citizen\_list\_view()}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1views_ab0c8bb97404e370b271bd889d50fadf9} 
+warrants.\+views.\+citizen\+\_\+list\+\_\+view (\begin{DoxyParamCaption}\item[{}]{request}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Handles the frontend page requests for citizen list page
+
+Args:
+    request (HTTPRequest): The clients request
+
+Returns:
+    HTTPResponse: Renders the page.
+\end{DoxyVerb}
+ \Hypertarget{namespacewarrants_1_1views_a3943c33addc780dcde41ac92f86d6eec}\index{warrants.views@{warrants.views}!crime\_list\_view@{crime\_list\_view}}
+\index{crime\_list\_view@{crime\_list\_view}!warrants.views@{warrants.views}}
+\doxysubsubsection{\texorpdfstring{crime\_list\_view()}{crime\_list\_view()}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1views_a3943c33addc780dcde41ac92f86d6eec} 
+warrants.\+views.\+crime\+\_\+list\+\_\+view (\begin{DoxyParamCaption}\item[{}]{request}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Handles the frontend page requests for crime list page
+
+Args:
+    request (HTTPRequest): The clients request
+
+Returns:
+    HTTPResponse: Renders the page.
+\end{DoxyVerb}
+ \Hypertarget{namespacewarrants_1_1views_a781832cc7712db79d87ff764f0ebc316}\index{warrants.views@{warrants.views}!dashboard\_view@{dashboard\_view}}
+\index{dashboard\_view@{dashboard\_view}!warrants.views@{warrants.views}}
+\doxysubsubsection{\texorpdfstring{dashboard\_view()}{dashboard\_view()}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1views_a781832cc7712db79d87ff764f0ebc316} 
+warrants.\+views.\+dashboard\+\_\+view (\begin{DoxyParamCaption}\item[{}]{request}{}\end{DoxyParamCaption})}
+
+
+
+Frontend Views. 
+
+\begin{DoxyVerb}Handles the frontend page requests for dashboard
+
+Args:
+    request (HTTPRequest): The clients request
+
+Returns:
+    HTTPResponse: Renders the page.
+\end{DoxyVerb}
+ \Hypertarget{namespacewarrants_1_1views_a98e21a21233f5dc3b51fe63966645a11}\index{warrants.views@{warrants.views}!officer\_list\_view@{officer\_list\_view}}
+\index{officer\_list\_view@{officer\_list\_view}!warrants.views@{warrants.views}}
+\doxysubsubsection{\texorpdfstring{officer\_list\_view()}{officer\_list\_view()}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1views_a98e21a21233f5dc3b51fe63966645a11} 
+warrants.\+views.\+officer\+\_\+list\+\_\+view (\begin{DoxyParamCaption}\item[{}]{request}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Handles the frontend page requests for officer list page 
+
+Args:
+    request (HTTPRequest): The clients request
+
+Returns:
+    HTTPResponse: Renders the page.
+\end{DoxyVerb}
+ \Hypertarget{namespacewarrants_1_1views_ab7140f3da7635570d263d236b48c1a27}\index{warrants.views@{warrants.views}!plate\_create\_view@{plate\_create\_view}}
+\index{plate\_create\_view@{plate\_create\_view}!warrants.views@{warrants.views}}
+\doxysubsubsection{\texorpdfstring{plate\_create\_view()}{plate\_create\_view()}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1views_ab7140f3da7635570d263d236b48c1a27} 
+warrants.\+views.\+plate\+\_\+create\+\_\+view (\begin{DoxyParamCaption}\item[{}]{request}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Handles the frontend page requests for license plate create page
+
+Args:
+    request (HTTPRequest): The clients request
+
+Returns:
+    HTTPResponse: Renders the page.
+\end{DoxyVerb}
+ \Hypertarget{namespacewarrants_1_1views_acca5c4f5ce65fe0907bb4fbdb9bb18f5}\index{warrants.views@{warrants.views}!plate\_detail\_view@{plate\_detail\_view}}
+\index{plate\_detail\_view@{plate\_detail\_view}!warrants.views@{warrants.views}}
+\doxysubsubsection{\texorpdfstring{plate\_detail\_view()}{plate\_detail\_view()}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1views_acca5c4f5ce65fe0907bb4fbdb9bb18f5} 
+warrants.\+views.\+plate\+\_\+detail\+\_\+view (\begin{DoxyParamCaption}\item[{}]{request}{, }\item[{}]{pk}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Handles the frontend page requests for license plate detail page
+
+Args:
+    request (HTTPRequest): The clients request
+    pk (string): The license plate number
+
+Returns:
+    HTTPResponse: Renders the page.
+\end{DoxyVerb}
+ \Hypertarget{namespacewarrants_1_1views_a8dfc73bf5c12b95443d49097c7dde06c}\index{warrants.views@{warrants.views}!plate\_edit\_view@{plate\_edit\_view}}
+\index{plate\_edit\_view@{plate\_edit\_view}!warrants.views@{warrants.views}}
+\doxysubsubsection{\texorpdfstring{plate\_edit\_view()}{plate\_edit\_view()}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1views_a8dfc73bf5c12b95443d49097c7dde06c} 
+warrants.\+views.\+plate\+\_\+edit\+\_\+view (\begin{DoxyParamCaption}\item[{}]{request}{, }\item[{}]{pk}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Handles the frontend page requests for license plate edit page
+
+Args:
+    request (HTTPRequest): The clients request
+    pk (string): The license plate number
+
+Returns:
+    HTTPResponse: Renders the page.
+\end{DoxyVerb}
+ \Hypertarget{namespacewarrants_1_1views_a813772d12534bec9af21ee0a018a84b4}\index{warrants.views@{warrants.views}!plate\_list\_view@{plate\_list\_view}}
+\index{plate\_list\_view@{plate\_list\_view}!warrants.views@{warrants.views}}
+\doxysubsubsection{\texorpdfstring{plate\_list\_view()}{plate\_list\_view()}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1views_a813772d12534bec9af21ee0a018a84b4} 
+warrants.\+views.\+plate\+\_\+list\+\_\+view (\begin{DoxyParamCaption}\item[{}]{request}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Handles the frontend page requests for license plate page
+
+Args:
+    request (HTTPRequest): The clients request
+
+Returns:
+    HTTPResponse: Renders the page.
+\end{DoxyVerb}
+ \Hypertarget{namespacewarrants_1_1views_a377ace7c8685cb68f6089ef8f5a5874f}\index{warrants.views@{warrants.views}!warrant\_create\_view@{warrant\_create\_view}}
+\index{warrant\_create\_view@{warrant\_create\_view}!warrants.views@{warrants.views}}
+\doxysubsubsection{\texorpdfstring{warrant\_create\_view()}{warrant\_create\_view()}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1views_a377ace7c8685cb68f6089ef8f5a5874f} 
+warrants.\+views.\+warrant\+\_\+create\+\_\+view (\begin{DoxyParamCaption}\item[{}]{request}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Handles the frontend page requests for warrant create page
+
+Args:
+    request (HTTPRequest): The clients request
+
+Returns:
+    HTTPResponse: Renders the page.
+\end{DoxyVerb}
+ \Hypertarget{namespacewarrants_1_1views_aa84d6ff1305c0533d495fdd0a2f07223}\index{warrants.views@{warrants.views}!warrant\_detail\_view@{warrant\_detail\_view}}
+\index{warrant\_detail\_view@{warrant\_detail\_view}!warrants.views@{warrants.views}}
+\doxysubsubsection{\texorpdfstring{warrant\_detail\_view()}{warrant\_detail\_view()}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1views_aa84d6ff1305c0533d495fdd0a2f07223} 
+warrants.\+views.\+warrant\+\_\+detail\+\_\+view (\begin{DoxyParamCaption}\item[{}]{request}{, }\item[{}]{pk}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Handles the frontend page requests for warrant detail page
+
+Args:
+    request (HTTPRequest): The clients request
+    pk (int): The id of the warrant record
+
+Returns:
+    HTTPResponse: Renders the page.
+\end{DoxyVerb}
+ \Hypertarget{namespacewarrants_1_1views_a7d215c5ca3cb9808fafe1c2ca3e0f936}\index{warrants.views@{warrants.views}!warrant\_edit\_view@{warrant\_edit\_view}}
+\index{warrant\_edit\_view@{warrant\_edit\_view}!warrants.views@{warrants.views}}
+\doxysubsubsection{\texorpdfstring{warrant\_edit\_view()}{warrant\_edit\_view()}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1views_a7d215c5ca3cb9808fafe1c2ca3e0f936} 
+warrants.\+views.\+warrant\+\_\+edit\+\_\+view (\begin{DoxyParamCaption}\item[{}]{request}{, }\item[{}]{pk}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Handles the frontend page requests for warrant edit page
+
+Args:
+    request (HTTPRequest): The clients request
+    pk (int): The id of the warrant record
+
+Returns:
+    HTTPResponse: Renders the page.
+\end{DoxyVerb}
+ \Hypertarget{namespacewarrants_1_1views_abdc5d75c7f711890cd2e60df62d1ed16}\index{warrants.views@{warrants.views}!warrants\_view@{warrants\_view}}
+\index{warrants\_view@{warrants\_view}!warrants.views@{warrants.views}}
+\doxysubsubsection{\texorpdfstring{warrants\_view()}{warrants\_view()}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1views_abdc5d75c7f711890cd2e60df62d1ed16} 
+warrants.\+views.\+warrants\+\_\+view (\begin{DoxyParamCaption}\item[{}]{request}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Handles the frontend page requests for warrants page
+
+Args:
+    request (HTTPRequest): The clients request
+
+Returns:
+    HTTPResponse: Renders the page.
+\end{DoxyVerb}
+ 
+
+\label{doc-var-members}
+\Hypertarget{namespacewarrants_1_1views_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespacewarrants_1_1views_a87743856a5dc4b576382f3e5438ae19a}\index{warrants.views@{warrants.views}!audit\_logger@{audit\_logger}}
+\index{audit\_logger@{audit\_logger}!warrants.views@{warrants.views}}
+\doxysubsubsection{\texorpdfstring{audit\_logger}{audit\_logger}}
+{\footnotesize\ttfamily \label{namespacewarrants_1_1views_a87743856a5dc4b576382f3e5438ae19a} 
+warrants.\+views.\+audit\+\_\+logger = logging.\+get\+Logger("{}audit"{})}
+

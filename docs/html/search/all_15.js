@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['warrant_0',['Warrant',['../classwarrants_1_1models_1_1_warrant.html',1,'warrants::models']]],
+  ['warrant_20system_1',['👮 Officer Warrant System',['../md__r_e_a_d_m_e.html',1,'']]],
+  ['warrant_5fcreate_5fview_2',['warrant_create_view',['../namespacewarrants_1_1views.html#a377ace7c8685cb68f6089ef8f5a5874f',1,'warrants::views']]],
+  ['warrant_5fdetail_5fview_3',['warrant_detail_view',['../namespacewarrants_1_1views.html#aa84d6ff1305c0533d495fdd0a2f07223',1,'warrants::views']]],
+  ['warrant_5fedit_5fview_4',['warrant_edit_view',['../namespacewarrants_1_1views.html#a7d215c5ca3cb9808fafe1c2ca3e0f936',1,'warrants::views']]],
+  ['warrants_5',['warrants',['../namespacewarrants.html',1,'warrants'],['../classwarrants_1_1serializer_1_1_citizen_serializer.html#a9dcc7d4f5d5e88a66e2c1a081c021c2d',1,'warrants.serializer.CitizenSerializer.warrants']]],
+  ['warrants_3a_3aadmin_6',['admin',['../namespacewarrants_1_1admin.html',1,'warrants']]],
+  ['warrants_3a_3aapps_7',['apps',['../namespacewarrants_1_1apps.html',1,'warrants']]],
+  ['warrants_3a_3amanagement_8',['management',['../namespacewarrants_1_1management.html',1,'warrants']]],
+  ['warrants_3a_3amanagers_9',['managers',['../namespacewarrants_1_1managers.html',1,'warrants']]],
+  ['warrants_3a_3amiddleware_10',['middleware',['../namespacewarrants_1_1middleware.html',1,'warrants']]],
+  ['warrants_3a_3amodels_11',['models',['../namespacewarrants_1_1models.html',1,'warrants']]],
+  ['warrants_3a_3apage_5furls_12',['page_urls',['../namespacewarrants_1_1page__urls.html',1,'warrants']]],
+  ['warrants_3a_3aserializer_13',['serializer',['../namespacewarrants_1_1serializer.html',1,'warrants']]],
+  ['warrants_3a_3aurls_14',['urls',['../namespacewarrants_1_1urls.html',1,'warrants']]],
+  ['warrants_3a_3aviews_15',['views',['../namespacewarrants_1_1views.html',1,'warrants']]],
+  ['warrants_5fview_16',['warrants_view',['../namespacewarrants_1_1views.html#abdc5d75c7f711890cd2e60df62d1ed16',1,'warrants::views']]],
+  ['warrantsconfig_17',['WarrantsConfig',['../classwarrants_1_1apps_1_1_warrants_config.html',1,'warrants::apps']]],
+  ['warrantserializer_18',['WarrantSerializer',['../classwarrants_1_1serializer_1_1_warrant_serializer.html',1,'warrants::serializer']]],
+  ['warrantviewset_19',['WarrantViewSet',['../classwarrants_1_1views_1_1_warrant_view_set.html',1,'warrants.views.WarrantViewSet'],['../namespacewarrants_1_1urls.html#a9a971e6e0227506e4a6c7beee63c670b',1,'warrants.urls.WarrantViewSet']]],
+  ['white_20',['WHITE',['../classwarrants_1_1models_1_1_citizen_1_1_race.html#a2a0d0ad4543ef7454fc468d7a5512666',1,'warrants::models::Citizen::Race']]],
+  ['workflow_21',['🛠️ Development Workflow',['../md__r_e_a_d_m_e.html#autotoc_md10',1,'']]],
+  ['wsgi_2epy_22',['wsgi.py',['../wsgi_8py.html',1,'']]]
+];
