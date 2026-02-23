@@ -1,18 +1,19 @@
 from rest_framework import serializers
 from .models import *
-# Create your models here.
 
-# Auto incrementing primary keys are created by default
 class CrimeSerializer(serializers.HyperlinkedModelSerializer):
-
+    """
+        Converts the Crime Model and Queryset into a native python datatype.
+    """
     class Meta:
         model = Crime
         fields = ['section_number', 'description']
 
 class License_PlateSerializer(serializers.HyperlinkedModelSerializer):
+    """
+        Converts the License Plate Model and Queryset into a native python datatype.
+    """
     owner_name = serializers.SerializerMethodField()
-
-    # WRITE-ONLY: Accepts ID (5)
     owner = serializers.PrimaryKeyRelatedField(queryset=Citizen.objects.all())
 
     class Meta:
@@ -23,6 +24,9 @@ class License_PlateSerializer(serializers.HyperlinkedModelSerializer):
         return f"{obj.owner.first_name} {obj.owner.last_name}"
 
 class OfficerSerializer(serializers.HyperlinkedModelSerializer):
+    """
+        Converts the Officer Model and Queryset into a native python datatype.
+    """
     name = serializers.SerializerMethodField()
 
     class Meta:
@@ -34,11 +38,12 @@ class OfficerSerializer(serializers.HyperlinkedModelSerializer):
         return f"{obj.citizen_id.first_name} {obj.citizen_id.last_name}"
 
 class WarrantSerializer(serializers.HyperlinkedModelSerializer):
-    # --- OVERRIDE INPUTS ---
+    """
+        Converts the Warrant Model and Queryset into a native python datatype.
+    """
     citizen_involved = serializers.PrimaryKeyRelatedField(queryset=Citizen.objects.all())
     crime_number = serializers.PrimaryKeyRelatedField(queryset=Crime.objects.all())
 
-    # --- READ ONLY OUTPUTS ---
     citizen_name = serializers.SerializerMethodField()
     linked_plates = serializers.SerializerMethodField()
     crime_description = serializers.CharField(source='crime_number.description', read_only=True)
@@ -69,7 +74,9 @@ class WarrantSerializer(serializers.HyperlinkedModelSerializer):
         return [p.plate_number for p in plates]
 
 class CitizenSerializer(serializers.HyperlinkedModelSerializer):
-
+    """
+        Converts the Citizen Model and Queryset into a native python datatype.
+    """
     warrants = WarrantSerializer(source = 'warrant_set', many = True, read_only = True)
     vehicles = License_PlateSerializer(source = 'plates', many = True, read_only = True)
     race_label = serializers.CharField(source='get_race_display', read_only=True)
