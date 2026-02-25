@@ -1,3 +1,6 @@
+"""
+    Handles the logging of any and all actions to any of the endpoints.
+"""
 import time
 import logging
 audit_logger = logging.getLogger("audit")

@@ -1,0 +1,82 @@
+\doxysection{warrants.\+models.\+Warrant Class Reference}
+\hypertarget{classwarrants_1_1models_1_1_warrant}{}\label{classwarrants_1_1models_1_1_warrant}\index{warrants.models.Warrant@{warrants.models.Warrant}}
+Inheritance diagram for warrants.\+models.\+Warrant:\+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classwarrants_1_1models_1_1_warrant}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \doxymbox{\hyperlink{classwarrants_1_1models_1_1_warrant_1_1_status}{Status}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_warrant_a27715cd5d7f32ee3d3ad9c9d72715051}{status}}
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_warrant_a7a932786fc953e8c3edbe97002b14380}{max\+\_\+length}}
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_warrant_ac109cfb57877175662b17781c63c0dd7}{choices}}
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_warrant_a0194cbc9eef45dc2e62886d20ae28645}{default}}
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_warrant_a9719906dd19dc644524d41ec0924bd43}{crime\+\_\+number}} = models.\+Foreign\+Key(\doxymbox{\hyperlink{classwarrants_1_1models_1_1_crime}{Crime}}, on\+\_\+delete=models.\+CASCADE)
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_warrant_aaf84851a1701326de27810e0af0fc5b9}{citizen\+\_\+involved}} = models.\+Foreign\+Key(\doxymbox{\hyperlink{classwarrants_1_1models_1_1_citizen}{Citizen}}, on\+\_\+delete=models.\+CASCADE)
+\item 
+\doxymbox{\hyperlink{classwarrants_1_1models_1_1_warrant_a006220c731942f0e983db1b63af0d940}{approving\+\_\+judge}} = models.\+Char\+Field(\doxymbox{\hyperlink{classwarrants_1_1models_1_1_warrant_a7a932786fc953e8c3edbe97002b14380}{max\+\_\+length}}=30)
+\end{DoxyCompactItemize}
+
+
+\label{doc-variable-members}
+\Hypertarget{classwarrants_1_1models_1_1_warrant_doc-variable-members}
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classwarrants_1_1models_1_1_warrant_a006220c731942f0e983db1b63af0d940}\index{warrants.models.Warrant@{warrants.models.Warrant}!approving\_judge@{approving\_judge}}
+\index{approving\_judge@{approving\_judge}!warrants.models.Warrant@{warrants.models.Warrant}}
+\doxysubsubsection{\texorpdfstring{approving\_judge}{approving\_judge}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_warrant_a006220c731942f0e983db1b63af0d940} 
+warrants.\+models.\+Warrant.\+approving\+\_\+judge = models.\+Char\+Field(\doxymbox{\hyperlink{classwarrants_1_1models_1_1_warrant_a7a932786fc953e8c3edbe97002b14380}{max\+\_\+length}}=30)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1models_1_1_warrant_ac109cfb57877175662b17781c63c0dd7}\index{warrants.models.Warrant@{warrants.models.Warrant}!choices@{choices}}
+\index{choices@{choices}!warrants.models.Warrant@{warrants.models.Warrant}}
+\doxysubsubsection{\texorpdfstring{choices}{choices}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_warrant_ac109cfb57877175662b17781c63c0dd7} 
+warrants.\+models.\+Warrant.\+choices\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1models_1_1_warrant_aaf84851a1701326de27810e0af0fc5b9}\index{warrants.models.Warrant@{warrants.models.Warrant}!citizen\_involved@{citizen\_involved}}
+\index{citizen\_involved@{citizen\_involved}!warrants.models.Warrant@{warrants.models.Warrant}}
+\doxysubsubsection{\texorpdfstring{citizen\_involved}{citizen\_involved}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_warrant_aaf84851a1701326de27810e0af0fc5b9} 
+warrants.\+models.\+Warrant.\+citizen\+\_\+involved = models.\+Foreign\+Key(\doxymbox{\hyperlink{classwarrants_1_1models_1_1_citizen}{Citizen}}, on\+\_\+delete=models.\+CASCADE)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1models_1_1_warrant_a9719906dd19dc644524d41ec0924bd43}\index{warrants.models.Warrant@{warrants.models.Warrant}!crime\_number@{crime\_number}}
+\index{crime\_number@{crime\_number}!warrants.models.Warrant@{warrants.models.Warrant}}
+\doxysubsubsection{\texorpdfstring{crime\_number}{crime\_number}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_warrant_a9719906dd19dc644524d41ec0924bd43} 
+warrants.\+models.\+Warrant.\+crime\+\_\+number = models.\+Foreign\+Key(\doxymbox{\hyperlink{classwarrants_1_1models_1_1_crime}{Crime}}, on\+\_\+delete=models.\+CASCADE)\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1models_1_1_warrant_a0194cbc9eef45dc2e62886d20ae28645}\index{warrants.models.Warrant@{warrants.models.Warrant}!default@{default}}
+\index{default@{default}!warrants.models.Warrant@{warrants.models.Warrant}}
+\doxysubsubsection{\texorpdfstring{default}{default}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_warrant_a0194cbc9eef45dc2e62886d20ae28645} 
+warrants.\+models.\+Warrant.\+default\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1models_1_1_warrant_a7a932786fc953e8c3edbe97002b14380}\index{warrants.models.Warrant@{warrants.models.Warrant}!max\_length@{max\_length}}
+\index{max\_length@{max\_length}!warrants.models.Warrant@{warrants.models.Warrant}}
+\doxysubsubsection{\texorpdfstring{max\_length}{max\_length}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_warrant_a7a932786fc953e8c3edbe97002b14380} 
+warrants.\+models.\+Warrant.\+max\+\_\+length\hspace{0.3cm}{\ttfamily [static]}}
+
+\Hypertarget{classwarrants_1_1models_1_1_warrant_a27715cd5d7f32ee3d3ad9c9d72715051}\index{warrants.models.Warrant@{warrants.models.Warrant}!status@{status}}
+\index{status@{status}!warrants.models.Warrant@{warrants.models.Warrant}}
+\doxysubsubsection{\texorpdfstring{status}{status}}
+{\footnotesize\ttfamily \label{classwarrants_1_1models_1_1_warrant_a27715cd5d7f32ee3d3ad9c9d72715051} 
+warrants.\+models.\+Warrant.\+status\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+The documentation for this class was generated from the following file:\+\begin{DoxyCompactItemize}
+\item 
+warrants/\+\doxymbox{\hyperlink{models_8py}{models.\+py}}\end{DoxyCompactItemize}

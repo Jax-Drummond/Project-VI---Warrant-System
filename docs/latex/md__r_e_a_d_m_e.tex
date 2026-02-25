@@ -1,0 +1,170 @@
+\chapter{👮 Officer Warrant System }
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{👮 Officer Warrant System@{👮 Officer Warrant System}}
+\label{md__r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md0}%
+
+
+A hybrid {\bfseries{Django + Django REST Framework}} application for managing police personnel and search warrants. This project allows for both web-\/based management (via Django Templates) and external integration (via REST API).
+
+The entire development environment is containerized using {\bfseries{Docker}}, ensuring consistency across all developer machines.
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md2}{}\doxysection{\texorpdfstring{🚀 Features}{🚀 Features}}\label{md__r_e_a_d_m_e_autotoc_md2}
+
+\begin{DoxyItemize}
+\item {\bfseries{Hybrid Architecture:\+}}
+\item 🖥️ {\bfseries{Web Dashboard:\+}} Server-\/side rendered views using Django Templates.
+\item 📡 {\bfseries{REST API:\+}} JSON endpoints for mobile apps or external integrations.
+\item {\bfseries{Core Modules:\+}}
+\item 👮 {\bfseries{Officers:\+}} Keep track of police personnel.
+\item 📜 {\bfseries{Warrants:\+}} Create, track, and execute search warrants.
+\item {\bfseries{Infrastructure:\+}}
+\item 🐳 Fully Dockerized (No local Python installation required).
+\item 🗄️ SQLite Database (File-\/based, persistent via Docker volumes).
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md4}{}\doxysection{\texorpdfstring{📦 Requirements}{📦 Requirements}}\label{md__r_e_a_d_m_e_autotoc_md4}
+
+\begin{DoxyItemize}
+\item \href{https://www.docker.com/products/docker-desktop/}{\texttt{Docker Desktop}}
+\item {\itshape Windows Users:\+} Ensure {\bfseries{WSL 2}} backend is enabled in Docker settings.
+\item Git
+\end{DoxyItemize}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md6}{}\doxysection{\texorpdfstring{📂 File Structure}{📂 File Structure}}\label{md__r_e_a_d_m_e_autotoc_md6}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{warrant-\/system/}
+\DoxyCodeLine{├──\ /config\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Project-\/wide\ settings\ \&\ main\ URLs}
+\DoxyCodeLine{│\ \ \ ├──\ settings.py}
+\DoxyCodeLine{│\ \ \ ├──\ urls.py}
+\DoxyCodeLine{│\ \ \ └──\ wsgi.py}
+\DoxyCodeLine{├──\ /warrants\ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Main\ Application\ Logic}
+\DoxyCodeLine{│\ \ \ ├──\ /management\ \ \ \ \ \ \ \ \#\ Commands\ (e.g\ seed)}
+\DoxyCodeLine{│\ \ \ ├──\ /migrations\ \ \ \ \ \ \ \ \#\ DB\ Schema\ changes}
+\DoxyCodeLine{│\ \ \ ├──\ /templates\ \ \ \ \ \ \ \ \ \#\ HTML\ files\ (Frontend)}
+\DoxyCodeLine{│\ \ \ ├──\ models.py\ \ \ \ \ \ \ \ \ \ \#\ Database\ Tables}
+\DoxyCodeLine{│\ \ \ ├──\ views.py\ \ \ \ \ \ \ \ \ \ \ \#\ Logic\ handlers}
+\DoxyCodeLine{│\ \ \ └──\ urls.py\ \ \ \ \ \ \ \ \ \ \ \ \#\ App-\/specific\ routes}
+\DoxyCodeLine{├──\ Dockerfile\ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Image\ build\ instructions}
+\DoxyCodeLine{├──\ docker-\/compose.yml\ \ \ \ \ \#\ Service\ orchestration}
+\DoxyCodeLine{├──\ requirements.txt\ \ \ \ \ \ \ \#\ Python\ dependencies}
+\DoxyCodeLine{├──\ manage.py\ \ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Django\ CLI\ entry\ point}
+\DoxyCodeLine{└──\ db.sqlite3\ \ \ \ \ \ \ \ \ \ \ \ \ \#\ Database\ file\ (Ignored\ by\ Git)}
+
+\end{DoxyCode}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md8}{}\doxysection{\texorpdfstring{⚙️ Installation \& Setup}{⚙️ Installation \& Setup}}\label{md__r_e_a_d_m_e_autotoc_md8}
+
+\begin{DoxyEnumerate}
+\item {\bfseries{Clone the repository:\+}} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{git\ clone\ https://github.com/Jax-\/Drummond/Project-\/VI-\/-\/-\/Warrant-\/System}
+\DoxyCodeLine{cd\ warrant-\/system}
+
+\end{DoxyCode}
+
+\item {\bfseries{Start the environment:\+}} This will build the Docker image and start the server. 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{docker\ compose\ up}
+
+\end{DoxyCode}
+
+\end{DoxyEnumerate}
+\begin{DoxyItemize}
+\item {\itshape Note:\+ The first run might take a few minutes to download the Python image.}
+\end{DoxyItemize}
+\begin{DoxyEnumerate}
+\item {\bfseries{Run Migrations (Initialize Database):\+}} Open a {\bfseries{new}} terminal window and run:\+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{docker\ compose\ exec\ web\ python\ manage.py\ migrate}
+
+\end{DoxyCode}
+
+\item {\bfseries{Create an Admin User:\+}} To access the Django Admin panel:\+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{docker\ compose\ exec\ web\ python\ manage.py\ createsuperuser}
+
+\end{DoxyCode}
+
+\item {\bfseries{Access the App:\+}}
+\end{DoxyEnumerate}
+\begin{DoxyItemize}
+\item {\bfseries{Web App:\+}} \href{https://www.google.com/search?q=http://localhost:8000}{\texttt{http:\+/\+/\+localhost:\+8000}}
+\item {\bfseries{Admin Panel:\+}} \href{https://www.google.com/search?q=http://localhost:8000/admin}{\texttt{http:\+/\+/\+localhost:\+8000/\+admin}}
+\end{DoxyItemize}
+\begin{DoxyEnumerate}
+\item {\bfseries{Run the Tests:\+}}
+\begin{DoxyEnumerate}
+\item Install Apache Jmeter
+\item open apache-\/jmeter-\/5.\+6.\+3\textbackslash{}bin\textbackslash{}jmeter.properties and set {\ttfamily \#Cookie\+Manager.\+save.\+cookies=false} to {\ttfamily Cookie\+Manager.\+save.\+cookies=true} and uncomment it. save the file. This only needs to be done once.
+\item run apache-\/jmeter by opening apache-\/jmeter-\/5.\+6.\+3\textbackslash{}bin\textbackslash{}\+Apache\+JMeter.jar (requires JRE or JDK)
+\item open the performance test plan in jmeter which is in Project-\/\+VI---Warrant-\/\+System\textbackslash{}\+Performance Test Plan.\+jmx
+\item ensure the docker environment is running then click the green start button to start the test.
+\item the same process can be used to run the unit tests.
+\end{DoxyEnumerate}
+\end{DoxyEnumerate}
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md10}{}\doxysection{\texorpdfstring{🛠️ Development Workflow}{🛠️ Development Workflow}}\label{md__r_e_a_d_m_e_autotoc_md10}
+Because we are using Docker, {\bfseries{do not}} run {\ttfamily python manage.\+py} directly on your local machine. Use the wrapper commands below.\hypertarget{md__r_e_a_d_m_e_autotoc_md11}{}\doxysubsection{\texorpdfstring{🔄 Database Migrations}{🔄 Database Migrations}}\label{md__r_e_a_d_m_e_autotoc_md11}
+Run this whenever you pull code that changes {\ttfamily \doxylink{models_8py}{models.\+py}}:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{docker\ compose\ exec\ web\ python\ manage.py\ migrate}
+
+\end{DoxyCode}
+
+
+If you have made changes to {\ttfamily \doxylink{models_8py}{models.\+py}} and need to generate new migration files:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{docker\ compose\ exec\ web\ python\ manage.py\ makemigrations}
+
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md12}{}\doxysubsection{\texorpdfstring{🌱 Database Seeding}{🌱 Database Seeding}}\label{md__r_e_a_d_m_e_autotoc_md12}
+Run this if you want to seed the database. (Currently only seeds citizens, and adds superuser(Check template.\+env)) 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{docker\ compose\ exec\ web\ python\ manage.py\ seed}
+
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md13}{}\doxysubsection{\texorpdfstring{📦 Installing New Packages}{📦 Installing New Packages}}\label{md__r_e_a_d_m_e_autotoc_md13}
+If you add a package to {\ttfamily requirements.\+txt}, you must rebuild the container:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{docker\ compose\ up\ -\/-\/build}
+
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md14}{}\doxysubsection{\texorpdfstring{🧪 Running Tests}{🧪 Running Tests}}\label{md__r_e_a_d_m_e_autotoc_md14}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{docker\ compose\ exec\ web\ python\ manage.py\ test}
+
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md15}{}\doxysubsection{\texorpdfstring{💻 Accessing the Shell}{💻 Accessing the Shell}}\label{md__r_e_a_d_m_e_autotoc_md15}
+To interact with the database directly via Python:\+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{docker\ compose\ exec\ web\ python\ manage.py\ shell}
+
+\end{DoxyCode}
+
+
+\DoxyHorRuler{0}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md17}{}\doxysection{\texorpdfstring{⚠️ Team Guidelines (Important)}{⚠️ Team Guidelines (Important)}}\label{md__r_e_a_d_m_e_autotoc_md17}
+{\bfseries{Database Management:\+}} We are using {\bfseries{SQLite}}. The {\ttfamily db.\+sqlite3} file is ignored by Git to prevent conflicts.
+
+
+\begin{DoxyItemize}
+\item Each individual has their own local database.
+\item {\bfseries{Do not}} delete the {\ttfamily .gitignore} entry for {\ttfamily db.\+sqlite3}.
+\item Always run {\ttfamily migrate} after pulling the latest code. 
+\end{DoxyItemize}

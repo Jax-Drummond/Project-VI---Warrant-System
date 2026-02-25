@@ -1,0 +1,46 @@
+\doxysection{config.\+urls Namespace Reference}
+\hypertarget{namespaceconfig_1_1urls}{}\label{namespaceconfig_1_1urls}\index{config.urls@{config.urls}}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+list \doxymbox{\hyperlink{namespaceconfig_1_1urls_ae29049386060d228ee4813d1ba49e289}{urlpatterns}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}URL configuration for config project.
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/6.0/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+\end{DoxyVerb}
+ 
+
+\label{doc-var-members}
+\Hypertarget{namespaceconfig_1_1urls_doc-var-members}
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespaceconfig_1_1urls_ae29049386060d228ee4813d1ba49e289}\index{config.urls@{config.urls}!urlpatterns@{urlpatterns}}
+\index{urlpatterns@{urlpatterns}!config.urls@{config.urls}}
+\doxysubsubsection{\texorpdfstring{urlpatterns}{urlpatterns}}
+{\footnotesize\ttfamily \label{namespaceconfig_1_1urls_ae29049386060d228ee4813d1ba49e289} 
+list config.\+urls.\+urlpatterns}
+
+{\bfseries Initial value:\+}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ =\ \ [}
+\DoxyCodeLine{00002\ \ \ \ \ path(\textcolor{stringliteral}{'admin/'},\ admin.site.urls),}
+\DoxyCodeLine{00003\ \ \ \ \ path(\textcolor{stringliteral}{'api/'},\ include(\textcolor{stringliteral}{'warrants.urls'})),}
+\DoxyCodeLine{00004\ \ \ \ \ path(\textcolor{stringliteral}{''},\ include(\textcolor{stringliteral}{'warrants.page\_urls'})),}
+\DoxyCodeLine{00005\ \ \ \ \ path(\textcolor{stringliteral}{'accounts/'},\ include(\textcolor{stringliteral}{'django.contrib.auth.urls'})),}
+\DoxyCodeLine{00006\ ]}
+
+\end{DoxyCode}
