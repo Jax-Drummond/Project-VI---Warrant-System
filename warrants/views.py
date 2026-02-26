@@ -15,7 +15,7 @@ class WarrantViewSet(viewsets.ModelViewSet):
     '''
     serializer_class = WarrantSerializer
     permission_classes = [IsAuthenticated]
-    queryset = Warrant.objects.all()
+    queryset = Warrant.objects.all().order_by('id')
 
     def perform_create(self, serializer):
         obj = serializer.save()
@@ -38,7 +38,7 @@ class CrimeViewSet(viewsets.ModelViewSet):
         Only people who are authenticated can access those endpoints
     '''
     permission_classes = [IsAuthenticated]
-    queryset = Crime.objects.all()
+    queryset = Crime.objects.all().order_by('section_number')
     serializer_class = CrimeSerializer
 
     def perform_create(self, serializer):
@@ -62,7 +62,7 @@ class CitizenViewSet(viewsets.ModelViewSet):
         Only people who are authenticated can access those endpoints
     '''
     permission_classes = [IsAuthenticated]
-    queryset = Citizen.objects.all()
+    queryset = Citizen.objects.all().order_by('id')
     serializer_class = CitizenSerializer
 
     filter_backends = [filters.SearchFilter]
@@ -86,7 +86,7 @@ class LicensePlateViewSet(viewsets.ModelViewSet):
         Only people who are authenticated can access those endpoints
     '''
     permission_classes = [IsAuthenticated]
-    queryset = License_Plate.objects.all()
+    queryset = License_Plate.objects.all().order_by('plate_number')
     serializer_class = License_PlateSerializer
 
     def perform_create(self, serializer):
@@ -110,7 +110,7 @@ class OfficerViewSet(viewsets.ModelViewSet):
         Anyone can access the Get Endpoint of this.
         Only Authenticated people can do any other request.
     '''
-    queryset = Officer.objects.all()
+    queryset = Officer.objects.all().order_by('badge_number')
     serializer_class = OfficerSerializer
 
     filter_backends = [filters.SearchFilter]
